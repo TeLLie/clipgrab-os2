@@ -27,7 +27,7 @@
     <message>
         <location filename="clipgrab.cpp" line="539"/>
         <source>Could not open update file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan update bestand niet openen.</translation>
     </message>
 </context>
 <context>
@@ -50,12 +50,12 @@
     <message>
         <location filename="login_dialog.ui" line="100"/>
         <source>about:blank</source>
-        <translation type="unfinished">about:blank</translation>
+        <translation>over:blank</translation>
     </message>
     <message>
         <location filename="login_dialog.ui" line="124"/>
         <source>Remember login</source>
-        <translation type="unfinished"></translation>
+        <translation>Onthoud inlog</translation>
     </message>
 </context>
 <context>
@@ -166,47 +166,47 @@
     <message>
         <location filename="mainwindow.cpp" line="872"/>
         <source>&amp;Open downloaded file</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Open gedownload bestand</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="873"/>
         <source>Open &amp;target folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Open &amp;doelmap</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="875"/>
         <source>&amp;Pause download</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pauzeer download</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="876"/>
         <source>&amp;Restart download</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Herstart download</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="877"/>
         <source>&amp;Cancel download</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Annuleer download</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="879"/>
         <source>Copy &amp;video link</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieer &amp;videokoppeling</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="880"/>
         <source>Open video link in &amp;browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Open videokoppeling in &amp;browser</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="885"/>
         <source>Resume download</source>
-        <translation type="unfinished"></translation>
+        <translation>Hervat download</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="894"/>
         <source>Show in &amp;Finder</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon in &amp;zoekveld</translation>
     </message>
 </context>
 <context>
@@ -484,17 +484,17 @@
     <message>
         <location filename="mainwindow.ui" line="790"/>
         <source>Ignore SSL errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Negeer SSL fouten</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="817"/>
         <source>Remember logins</source>
-        <translation type="unfinished"></translation>
+        <translation>Onthoud inlog gegevens</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="824"/>
         <source>Remember video quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Onthoud video kwaliteit</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="836"/>
@@ -509,7 +509,7 @@
     <message>
         <location filename="mainwindow.ui" line="867"/>
         <source>Please select a language from the list below. You have to restart ClipGrab in order to apply you selection.</source>
-        <translation>Selecteer A.U.B. een taal van de lijst beneden. U moet ClipGrab herstaren om de taal te activeren.</translation>
+        <translation>Selecteer A.U.B. een taal van de lijst beneden. U moet ClipGrab herstarten om de taal te activeren.</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="904"/>
@@ -582,7 +582,7 @@
         <location filename="mainwindow.ui" line="1131"/>
         <source>&lt;h2&gt;Support ClipGrab!&lt;/h2&gt;
 &lt;p&gt;Only with your support, ClipGrab can remain free software!&lt;br&gt;So if you like ClipGrab and also want to help ensuring its further development, please consider making a donation.&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;h2&gt;Help ClipGrab!&lt;/h2&gt;
+        <translation>&lt;h2&gt;Help ClipGrab!&lt;/h2&gt;
 &lt;p&gt;Alleen met uw help, kan ClipGrab gratis blijven!&lt;br&gt;Dus als u GlipGrab leuk vind en ook ons wilt helpen tijdens het ontwikkelen, overweeg dan om een donatie te maken.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -626,7 +626,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="metadata-dialog.ui" line="25"/>
         <source>Please enter the metadata for your download. If you don&apos;t want to add metadata, just leave the fields empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="metadata-dialog.ui" line="45"/>
@@ -644,42 +644,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="update_message.ui" line="14"/>
         <source>Update for ClipGrab</source>
-        <translation type="unfinished"></translation>
+        <translation>Update voor clipgrab</translation>
     </message>
     <message>
         <location filename="update_message.ui" line="69"/>
         <source>ClipGrab %1 is now available (you are using %2). Would you like to install the update?</source>
-        <translation type="unfinished"></translation>
+        <translation>ClipGra%1 is nu beschikbaar (je gebruikt versie %2). Wil je de update installeren?</translation>
     </message>
     <message>
         <location filename="update_message.ui" line="83"/>
         <source>There is an update for your version of ClipGrab!</source>
-        <translation type="unfinished"></translation>
+        <translation>Er is een update voor Clipgrab!</translation>
     </message>
     <message>
         <location filename="update_message.ui" line="183"/>
         <source>Skip this update</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla deze update over</translation>
     </message>
     <message>
         <location filename="update_message.ui" line="193"/>
         <source>Download update</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="update_message.ui" line="204"/>
         <source>about:blank</source>
-        <translation type="unfinished">about:blank</translation>
+        <translation>over:blank</translation>
     </message>
     <message>
         <location filename="update_message.ui" line="212"/>
         <source>Remind me later</source>
-        <translation type="unfinished"></translation>
+        <translation>Herinner me later</translation>
     </message>
     <message>
         <location filename="update_message.ui" line="229"/>
         <source>The update will begin in just a moment …</source>
-        <translation type="unfinished"></translation>
+        <translation>De update begint in een sec ....</translation>
     </message>
 </context>
 <context>
@@ -749,7 +749,7 @@ Login met uw Google account om deze video te kunnen downloaden.</translation>
     <message>
         <location filename="converter_ffmpeg.cpp" line="217"/>
         <source>Original (audio only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Orgineel (alleen geluid)</translation>
     </message>
     <message>
         <location filename="converter_ffmpeg.cpp" line="345"/>
@@ -769,17 +769,17 @@ U kunt niet 1080p videos van YouTube downloaden.</translation>
     <message>
         <location filename="message_dialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialoog</translation>
     </message>
     <message>
         <location filename="message_dialog.ui" line="35"/>
         <source>Close this message</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluit dit bericht</translation>
     </message>
     <message>
         <location filename="message_dialog.ui" line="62"/>
         <source>about:blank</source>
-        <translation type="unfinished">about:blank</translation>
+        <translation>over:blank</translation>
     </message>
 </context>
 <context>
@@ -813,7 +813,7 @@ U kunt niet 1080p videos van YouTube downloaden.</translation>
     <message>
         <location filename="video.cpp" line="513"/>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Geannuleerd</translation>
     </message>
 </context>
 <context>
@@ -838,17 +838,17 @@ U kunt niet 1080p videos van YouTube downloaden.</translation>
     <message>
         <location filename="video_dailymotion.cpp" line="87"/>
         <source>480p</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="video_dailymotion.cpp" line="88"/>
         <source>380p</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="video_dailymotion.cpp" line="89"/>
         <source>240p</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>high (480p)</source>
@@ -866,13 +866,13 @@ U kunt niet 1080p videos van YouTube downloaden.</translation>
         <location filename="video_facebook.cpp" line="112"/>
         <location filename="video_facebook.cpp" line="141"/>
         <source>HD</source>
-        <translation type="unfinished">HD</translation>
+        <translation>HD</translation>
     </message>
     <message>
         <location filename="video_facebook.cpp" line="113"/>
         <location filename="video_facebook.cpp" line="114"/>
         <source>normal</source>
-        <translation type="unfinished">normaal</translation>
+        <translation>normaal</translation>
     </message>
 </context>
 <context>
@@ -926,32 +926,32 @@ U kunt niet 1080p videos van YouTube downloaden.</translation>
     <message>
         <location filename="video_youtube.cpp" line="150"/>
         <source>HD (1080p)</source>
-        <translation type="unfinished">HD (1080p)</translation>
+        <translation>HD (1080p)</translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="154"/>
         <source>HD (1440p)</source>
-        <translation type="unfinished">HD (720p_ {1440p?}</translation>
+        <translation>HD (720p_ {1440p?}</translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="158"/>
         <source>4K (2160p)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="162"/>
         <source>5K (2880p)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="166"/>
         <source>8K (4320p)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="169"/>
         <source>8K (4320p60)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="488"/>
@@ -959,7 +959,7 @@ U kunt niet 1080p videos van YouTube downloaden.</translation>
         <location filename="video_youtube.cpp" line="615"/>
         <location filename="video_youtube.cpp" line="618"/>
         <source>Original</source>
-        <translation type="unfinished">Orgineel</translation>
+        <translation>Orgineel</translation>
     </message>
     <message>
         <location filename="video_youtube.cpp" line="671"/>
