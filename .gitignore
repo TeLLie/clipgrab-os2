@@ -1,0 +1,17 @@
+*~
+.DS_Store
+clipgrab.pro.user
+ClipGrab.app
+ui_*.h
+Makefile
+*.o
+moc_*.cpp
+*.autosave
+*.swp
+*.log
+qrc_resources.cpp
+*.pro.user*
+clipgrab-*.tar*
+clipgrab-*.zip*
+build
+ClipGrab.xcodeproj
