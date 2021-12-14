@@ -1,6 +1,6 @@
 /*
     ClipGrab³
-    Copyright (C) Philipp Schmieder
+    Copyright (C) The ClipGrab Project
     http://clipgrab.de
     feedback [at] clipgrab [dot] de
 
@@ -26,6 +26,7 @@
 
 #include "converter.h"
 #include <QSysInfo>
+#include <QApplication>
 
 class ffmpegThread : public QThread
 {
@@ -59,6 +60,7 @@ public:
     void concatenate(QList<QFile*> files, QFile* target, QString originalFormat);
     bool isAvailable();
     QString getExtensionForMode(int mode);
+    bool isAudioOnly(int mode);
     ffmpegThread ffmpeg;
 
 public slots:

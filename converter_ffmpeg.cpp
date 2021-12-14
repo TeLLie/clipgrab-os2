@@ -1,6 +1,6 @@
 /*
     ClipGrab³
-    Copyright (C) Philipp Schmieder
+    Copyright (C) The ClipGrab Project
     http://clipgrab.de
     feedback [at] clipgrab [dot] de
 
@@ -170,6 +170,10 @@ void ffmpegThread::run()
                 {
                     container = "m4a";
                 }
+                else if (audioCodec.contains("opus")) {
+                    container = "opus";
+                }
+
             }
         }
 
@@ -224,21 +228,28 @@ QString converter_ffmpeg::getExtensionForMode(int mode)
     {
         case 0:
             return "mp4";
-            break;
         case 1:
             return "wmv";
-            break;
         case 2:
             return "ogg";
-            break;
         case 3:
             return "mp3";
-            break;
         case 4:
             return "ogg";
-            break;
     }
     return "";
+}
+
+bool converter_ffmpeg::isAudioOnly(int mode) {
+    switch (mode)
+    {
+        case 3:
+        case 4:
+        case 5:
+            return true;
+        default:
+        return false;
+    }
 }
 
 
@@ -252,7 +263,7 @@ void converter_ffmpeg::startConversion(QFile* inputFile, QString& target, QStrin
     switch (mode)
     {
     case 0:
-        acceptedAudio <<  "libvo_aacenc" << "aac" << "mp3";
+        acceptedAudio <<  "aac" << "libvo_aacenc" << "mp3";
         acceptedVideo << "mpeg4" << "h264";
         container = "mp4";
         break;
@@ -277,7 +288,7 @@ void converter_ffmpeg::startConversion(QFile* inputFile, QString& target, QStrin
         container = "ogg";
         break;
     case 5:
-        acceptedAudio << "libvorbis" << "vorbis" << "libmp3lame" << "mp3" << "wmav2" << "libvo_aaenc" << "aac";
+        acceptedAudio << "libvorbis" << "vorbis" << "libmp3lame" << "mp3" << "wmav2" << "libvo_aaenc" << "aac" << "opus";
         acceptedVideo << "none";
         container = "";
         break;
@@ -324,7 +335,7 @@ bool converter_ffmpeg::isAvailable()
     QString ffmpegPath;
     QProcess testProcess;
 
-    #ifdef Q_WS_MAC
+    #ifdef Q_OS_MAC
         ffmpegPath =  "\"" + QApplication::applicationDirPath() + "/ffmpeg\"";
     #else
 

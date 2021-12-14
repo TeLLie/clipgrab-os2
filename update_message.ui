@@ -35,20 +35,67 @@
    <property name="verticalSpacing">
     <number>10</number>
    </property>
-   <item row="7" column="2">
-    <spacer name="horizontalSpacer_2">
+   <item row="5" column="0" colspan="4">
+    <widget class="QLabel" name="labelDownloadProgress">
+     <property name="text">
+      <string>The update will begin in just a moment …</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
-       <height>20</height>
+       <width>20</width>
+       <height>10</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" rowspan="2" colspan="5">
+   <item row="7" column="0">
+    <widget class="QPushButton" name="buttonSkip">
+     <property name="text">
+      <string>Skip this update</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QPushButton" name="buttonLater">
+     <property name="text">
+      <string>Remind me later</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="4">
+    <widget class="QProgressBar" name="progressBar">
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QPushButton" name="buttonConfirm">
+     <property name="text">
+      <string>Download update</string>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="2" colspan="4">
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
@@ -161,44 +208,33 @@ font-size: 18px;</string>
      </layout>
     </widget>
    </item>
-   <item row="2" column="2">
-    <spacer name="verticalSpacer">
+   <item row="7" column="1">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>10</height>
+       <width>40</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="7" column="0">
-    <widget class="QPushButton" name="buttonSkip">
-     <property name="text">
-      <string>Skip this update</string>
+   <item row="4" column="0" colspan="4">
+    <widget class="CGWebEngineView" name="webEngineView" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>100</verstretch>
+      </sizepolicy>
      </property>
-     <property name="autoDefault">
-      <bool>false</bool>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
      </property>
-    </widget>
-   </item>
-   <item row="7" column="4">
-    <widget class="QPushButton" name="buttonConfirm">
-     <property name="text">
-      <string>Download update</string>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="5">
-    <widget class="QWebView" name="webView">
      <property name="url">
       <url>
        <string>about:blank</string>
@@ -206,44 +242,20 @@ font-size: 18px;</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
-    <widget class="QPushButton" name="buttonLater">
-     <property name="text">
-      <string>Remind me later</string>
-     </property>
-     <property name="autoDefault">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="5">
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>24</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="5">
-    <widget class="QLabel" name="labelDownloadProgress">
-     <property name="text">
-      <string>The update will begin in just a moment …</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QWebView</class>
+   <class>CGWebEngineView</class>
    <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
+   <header location="global">web_engine_view.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>buttonConfirm</tabstop>
   <tabstop>buttonLater</tabstop>
   <tabstop>buttonSkip</tabstop>
-  <tabstop>webView</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>

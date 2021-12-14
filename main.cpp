@@ -1,6 +1,6 @@
 /*
     ClipGrab³
-    Copyright (C) Philipp Schmieder
+    Copyright (C) The ClipGrab Project
     http://clipgrab.de
     feedback [at] clipgrab [dot] de
 
@@ -21,10 +21,13 @@
 
 
 
-#include <QtGui/QApplication>
+#include <QApplication>
+#include <QGuiApplication>
 #include <QTranslator>
+#include <QDebug>
 #include "mainwindow.h"
 #include "clipgrab.h"
+#include "video.h"
 
 #define STRINGIZE(x) #x
 #define STRINGIZE_VALUE_OF(x) STRINGIZE(x)
@@ -34,22 +37,36 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QCoreApplication::setOrganizationName("Philipp Schmieder");
-    QCoreApplication::setOrganizationDomain("clipgrab.de");
+    QCoreApplication::setOrganizationName("ClipGrab");
+    QCoreApplication::setOrganizationDomain("clipgrab.org");
     QCoreApplication::setApplicationName("ClipGrab");
     QCoreApplication::setApplicationVersion(QString(STRINGIZE_VALUE_OF(CLIPGRAB_VERSION)).replace("\"", ""));
-    QSplashScreen splash(QPixmap(":/img/splash.png"), Qt::FramelessWindowHint);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-    splash.setMask(QPixmap(":/img/splash.png").mask());
-    splash.show();
+    QCommandLineParser parser;
+    parser.setApplicationDescription("ClipGrab");
+    parser.addVersionOption();
+    parser.addHelpOption();
+    QCommandLineOption startMinimizedOption(QStringList() << "start-minimized", "Hide the ClipGrab window on launch");
+    parser.addOption(startMinimizedOption);
+    parser.process(app);
 
-    ClipGrab cg;
+    QSettings settings;
+    if (settings.allKeys().isEmpty()) {
+        static const QChar key[] = {
+            0x0050, 0x0068, 0x0069, 0x006c, 0x0069, 0x0070, 0x0070, 0x0020, 0x0053, 0x0063, 0x0068, 0x006d, 0x0069, 0x0065, 0x0064, 0x0065, 0x0072};
+        QSettings legacySettings(QString::fromRawData(key, sizeof(key) / sizeof(QChar)), "ClipGrab");
+        QStringList legacyKeys = legacySettings.allKeys();
+        QStringList ignoredKeys = {"youtubePlayerUrl", "youtubePlayerJS", "youtubePlayerSignatureMethodName"};
+        for (int i = 0; i < legacyKeys.length(); i++) {
+            if (ignoredKeys.contains(legacyKeys.at(i))) continue;
+            settings.setValue(legacyKeys.at(i), legacySettings.value(legacyKeys.at(i)));
+        }
+        legacySettings.clear();
+    }
+
+    ClipGrab* cg = new ClipGrab();
 
     QTranslator translator;
-    QSettings settings;
     QString locale = settings.value("Language", "auto").toString();
     if (locale == "auto")
     {
@@ -57,10 +74,10 @@ int main(int argc, char *argv[])
     }
     translator.load(QString(":/lng/clipgrab_") + locale);
     app.installTranslator(&translator);
-    for (int i=0; i < cg.languages.length(); i++)
+    for (int i=0; i < cg->languages.length(); i++)
     {
-        if (cg.languages[i].code == locale) {
-            if (cg.languages[i].isRTL)
+        if (cg->languages[i].code == locale) {
+            if (cg->languages[i].isRTL)
             {
                 QApplication::setLayoutDirection(Qt::RightToLeft);
             }
@@ -68,11 +85,20 @@ int main(int argc, char *argv[])
         }
     }
 
-    MainWindow w;
-    w.cg = &cg;
+    MainWindow w(cg);
     w.init();
-    w.show();
-    splash.finish(w.centralWidget());
-    cg.getUpdateInfo();
+    if (!parser.isSet(startMinimizedOption)) {
+        w.show();
+    }
+
+    QTimer::singleShot(0, [=] {
+       cg->getUpdateInfo();
+       QObject::connect(cg, &ClipGrab::updateInfoProcessed, [cg] {
+           bool force = QSettings().value("forceYoutubeDlDownload", false).toBool();
+           if (force) QSettings().setValue("forceYoutubeDlDownload", false);
+           cg->downloadYoutubeDl(force);
+       });
+    });
+
     return app.exec();
 }

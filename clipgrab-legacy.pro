@@ -49,6 +49,7 @@ SOURCES += clipgrab.cpp \
     message_dialog.cpp
 RESOURCES += resources.qrc
 TRANSLATIONS += clipgrab_bg.ts \
+                clipgrab_bn.ts \
                 clipgrab_ca.ts \
                 clipgrab_cs.ts \
                 clipgrab_de.ts \

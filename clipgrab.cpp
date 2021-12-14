@@ -1,6 +1,6 @@
 /*
-	ClipGrab³
-    Copyright (C) Philipp Schmieder
+    ClipGrab³
+    Copyright (C) The ClipGrab Project
     http://clipgrab.de
     feedback [at] clipgrab [dot] de
 
@@ -9,7 +9,7 @@
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     ClipGrab is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,6 @@
     You should have received a copy of the GNU General Public License
     along with ClipGrab.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 
 #include "clipgrab.h"
@@ -43,11 +42,11 @@ ClipGrab::ClipGrab()
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Català");
+    newLang.name = QString::fromUtf8("Català");
     newLang.code = "ca";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Česky");
+    newLang.name = QString::fromUtf8("Česky");
     newLang.code = "cs";
     languages.append(newLang);
 
@@ -59,15 +58,15 @@ ClipGrab::ClipGrab()
     newLang.code = "en";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Español");
+    newLang.name = QString::fromUtf8("Español");
     newLang.code = "es";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Euskara");
+    newLang.name = QString::fromUtf8("Euskara");
     newLang.code = "eu";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Français");
+    newLang.name = QString::fromUtf8("Français");
     newLang.code = "fr";
     languages.append(newLang);
 
@@ -83,7 +82,7 @@ ClipGrab::ClipGrab()
     newLang.code = "sw";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Lietuvių");
+    newLang.name = QString::fromUtf8("Lietuvių");
     newLang.code = "lt";
     languages.append(newLang);
 
@@ -103,7 +102,7 @@ ClipGrab::ClipGrab()
     newLang.code = "pl";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Português");
+    newLang.name = QString::fromUtf8("Português");
     newLang.code = "pt";
     languages.append(newLang);
 
@@ -111,7 +110,7 @@ ClipGrab::ClipGrab()
     newLang.code = "ro";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Slovenščina");
+    newLang.name = QString::fromUtf8("Slovenščina");
     newLang.code = "si";
     languages.append(newLang);
 
@@ -123,74 +122,65 @@ ClipGrab::ClipGrab()
     newLang.code = "sv";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Türkçe");
+    newLang.name = QString::fromUtf8("Türkçe");
     newLang.code = "tr";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Tiếng Việt");
+    newLang.name = QString::fromUtf8("Tiếng Việt");
     newLang.code = "vi";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("български");
+    newLang.name = QString::fromUtf8("български");
     newLang.code = "bg";
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Ελληνικά¨");
+    newLang.name = QString::fromUtf8("বাংলা");
+    newLang.code = "bn";
+    newLang.isRTL = false;
+    languages.append(newLang);
+
+    newLang.name = QString::fromUtf8("Ελληνικά¨");
     newLang.code = "el";
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("فارسی");
+    newLang.name = QString::fromUtf8("فارسی");
     newLang.code = "fa";
     newLang.isRTL = true;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("日本語");
+    newLang.name = QString::fromUtf8("日本語");
     newLang.code = "ja";
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("한국어");
+    newLang.name = QString::fromUtf8("한국어");
     newLang.code = "ko";
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("македонски");
+    newLang.name = QString::fromUtf8("македонски");
     newLang.code = "mk";
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("ਪੰਜਾਬੀ");
+    newLang.name = QString::fromUtf8("ਪੰਜਾਬੀ");
     newLang.code = "pa";
     newLang.isRTL = false;
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Русский");
+    newLang.name = QString::fromUtf8("Русский");
     newLang.code = "ru";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("Српски");
+    newLang.name = QString::fromUtf8("Српски");
     newLang.code = "sr";
     languages.append(newLang);
 
-    newLang.name = QString::fromLocal8Bit("中文");
+    newLang.name = QString::fromUtf8("中文");
     newLang.code = "zh";
     languages.append(newLang);
-
-    //*
-    //* Initialise the supported portals
-    //*
-    portals.append(new video_youtube);
-    portals.append(new video_vimeo);
-    portals.append(new video_dailymotion);
-    portals.append(new video_myspass);
-    portals.append(new video_facebook);
-    
-    //*
-    //* Initialise the heuristic
-    //*
-    this->heuristic = new video_heuristic();
 
     //*
     //* Initialise the supported converters
@@ -219,20 +209,10 @@ ClipGrab::ClipGrab()
     }
 
     //*
-    //* Load Equifax CA certificate to avoid SSL problems on systems where it’s not in the trust store
+    //* Add Mozilla Root CA certificats to avoid errors from missing system certificates
     //*
-    bool certExists = false;
-    foreach (QSslCertificate cert, QSslSocket::defaultCaCertificates()) {
-        if (cert.serialNumber() == "903804111")
-        {
-            certExists = true;
-        }
-    }
-    if (!certExists)
-    {
-        QSslSocket::addDefaultCaCertificates(":/crt/equifax_secure_ca.crt");
-        qDebug() << "Adding Equifax CA certificate";
-    }
+    QSslSocket::addDefaultCaCertificates(":/crt/mozilla-root-cas.txt");
+
 
     //*
     //* Remove previously downloaded update
@@ -250,20 +230,37 @@ ClipGrab::ClipGrab()
     }
 
     //*
-    //* Disable HTTPS certificate verification on legacy Mac systems
-    //*
-    #ifdef MAC_LEGACY
-    QSslConfiguration configuration = QSslConfiguration::defaultConfiguration();
-    configuration.setPeerVerifyMode(QSslSocket::VerifyNone);
-    configuration.setProtocol(QSsl::TlsV1);
-    QSslConfiguration::setDefaultConfiguration(configuration);
-    #endif
-
-    //*
     //* Miscellaneous
     //*
     activateProxySettings();
     connect(QApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(clipboardChanged()));
+
+    currentVideo = nullptr;
+    currentSearch = nullptr;
+}
+
+void ClipGrab::fetchVideoInfo(const QString& url) {
+    if (currentVideo != nullptr) {
+        if (!downloads.contains(currentVideo)) {
+            currentVideo->deleteLater();
+        }
+    }
+
+    currentVideo = new video();
+    connect(currentVideo, &video::stateChanged, [=] {
+        emit currentVideoStateChanged(currentVideo);
+    });
+    currentVideo->fetchInfo(url);
+}
+
+void ClipGrab::clearCurrentVideo() {
+    if (currentVideo != nullptr) {
+        if (!downloads.contains(currentVideo)) {
+            currentVideo->deleteLater();
+        }
+        currentVideo = nullptr;
+        emit currentVideoStateChanged(nullptr);
+    }
 }
 
 void ClipGrab::getUpdateInfo()
@@ -273,26 +270,24 @@ void ClipGrab::getUpdateInfo()
     //*
     QString sys = "x11";
 
-    #if defined Q_WS_WIN
+    #if defined Q_OS_WIN
         sys = "win";
     #endif
-    #if defined Q_WS_MAC
-        #ifdef Q_WS_MAC64
-            sys = "mac";
-        #else
-            sys = "mac-legacy";
-        #endif
+    #if defined Q_OS_MAC
+         sys = "mac";
     #endif
 
     QString firstStarted = settings.value("firstStarted", "").toString();
 
-    QUrl updateInfoRequestUrl("https://clipgrab.org/update/" + sys + "/");
-    updateInfoRequestUrl.addQueryItem("v", this->version);
-    updateInfoRequestUrl.addQueryItem("l", QLocale::system().name().split("_")[0]);
+    QUrlQuery updateInfoRequestUrlQuery;
+    updateInfoRequestUrlQuery.addQueryItem("v", this->version);
+    updateInfoRequestUrlQuery.addQueryItem("l", QLocale::system().name().split("_")[0]);
     if (!firstStarted.isEmpty())
     {
-        updateInfoRequestUrl.addQueryItem("t", firstStarted);
+        updateInfoRequestUrlQuery.addQueryItem("t", firstStarted);
     }
+    QUrl updateInfoRequestUrl("https://clipgrab.org/update/" + sys + "/");
+    updateInfoRequestUrl.setQuery(updateInfoRequestUrlQuery);
 
     QNetworkRequest updateInfoRequest;
     updateInfoRequest.setUrl(updateInfoRequestUrl);
@@ -305,7 +300,8 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
 {
     if (!reply->bytesAvailable())
     {
-        qDebug() << "No updates available";
+        qDebug() << "Could not reach update server.";
+        emit updateInfoProcessed();
         return;
     }
 
@@ -323,26 +319,26 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
     QDomNodeList updates = updateInfoXml.elementsByTagName("update");
     if (!updates.isEmpty() && this->settings.value("DisableUpdateNotifications", false) == false)
     {
-        QString currentVersion = QCoreApplication::applicationVersion();
+        updateInfo currentVersion;
+        currentVersion.version = QCoreApplication::applicationVersion();
 
         //Get update information
-        for (uint i = 0; i < updates.length(); i++)
+        for (int i = 0; i < updates.length(); i++)
         {
             QDomElement update = updates.at(i).toElement();
 
-            //Only consider newer versions
-            if (currentVersion.compare(update.attribute("version", "0")) >= 0)
-            {
-                continue;
-            }
-
             updateInfo newUpdateInfo;
-            newUpdateInfo.version = update.attribute("version");
+            newUpdateInfo.version = update.attribute("version", "0");
             newUpdateInfo.url = update.attribute("uri");
             newUpdateInfo.sha1 = update.attribute("sha1");
             newUpdateInfo.domNodes = update.childNodes();
-            this->availableUpdates.append(newUpdateInfo);
+
+            //Only consider newer versions
+            if (newUpdateInfo > currentVersion) {
+                this->availableUpdates.append(newUpdateInfo);
+            }
         }
+
 
         if (!this->availableUpdates.isEmpty())
         {
@@ -358,7 +354,7 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
                 updateNotes.appendChild(updateNotesDocument.createElement("h3"));
                 updateNotes.childNodes().at(0).appendChild(updateNotesDocument.createTextNode(this->availableUpdates.at(i).version));
 
-                for (uint j = 0; j < this->availableUpdates.at(i).domNodes.length(); j++)
+                for (int j = 0; j < this->availableUpdates.at(i).domNodes.length(); j++)
                 {
                     updateNotes.appendChild(this->availableUpdates.at(i).domNodes.at(j).cloneNode());
                 }
@@ -372,14 +368,17 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
                 this->updateMessageDialog = new QDialog(QApplication::activeWindow());
                 this->updateMessageUi->setupUi(this->updateMessageDialog);
 
-                this->updateMessageUi->labelInfoText->setText(this->updateMessageUi->labelInfoText->text().arg(this->availableUpdates.last().version, currentVersion));
+                this->updateMessageUi->labelInfoText->setText(this->updateMessageUi->labelInfoText->text().arg(this->availableUpdates.last().version, currentVersion.version));
                 this->updateMessageUi->progressBar->hide();
                 this->updateMessageUi->labelDownloadProgress->hide();
-                this->updateMessageUi->webView->setContent(updateNotesDocument.toString().toUtf8());
-                this->updateMessageUi->webView->setAcceptDrops(false);
 
-                this->updateReply = NULL;
-                this->updateFile = NULL;
+                this->updateMessageUi->webEngineView->setPage(new QWebEnginePage(new QWebEngineProfile));
+                this->updateMessageUi->webEngineView->setHtml(updateNotesDocument.toString());
+                this->updateMessageUi->webEngineView->setContextMenuPolicy(Qt::NoContextMenu);
+                this->updateMessageUi->webEngineView->setAcceptDrops(false);
+
+                this->updateReply = nullptr;
+                this->updateFile = nullptr;
 
 
                 connect(this->updateMessageUi->buttonConfirm, SIGNAL(clicked()), this, SLOT(startUpdateDownload()));
@@ -388,13 +387,13 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
                 if (this->updateMessageDialog->exec() == QDialog::Rejected)
                 {
                     //Cancel any ongoing update operations
-                    if (this->updateReply != NULL)
+                    if (this->updateReply != nullptr)
                     {
                         this->updateReply->disconnect();
                         this->updateReply->abort();
                         this->updateReply->deleteLater();
                     }
-                    if (this->updateFile != NULL)
+                    if (this->updateFile != nullptr)
                     {
                         this->updateFile->close();
                         this->updateFile->deleteLater();
@@ -408,7 +407,7 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
     QDomNodeList commands = updateInfoXml.elementsByTagName("command");
     if (!commands.isEmpty())
     {
-        for (uint i = 0; i < commands.length(); i++)
+        for (int i = 0; i < commands.length(); i++)
         {
             QDomElement command = commands.at(i).toElement();
 
@@ -446,11 +445,15 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
                 if (command.hasAttribute("link-policy")) {
                     if (command.attribute("link-policy") == "open")
                     {
-                        dialog->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+                        dialog->setLinkPolicy("open");
                     }
                     else if (command.attribute("link-policy") == "open-external")
                     {
-                        dialog->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
+                        dialog->setLinkPolicy("open-external");
+                    }
+                    else if (command.attribute("link-policy") == "follow")
+                    {
+                        dialog->setLinkPolicy("follow");
                     }
                 }
                 dialog->exec();
@@ -459,12 +462,20 @@ void ClipGrab::parseUpdateInfo(QNetworkReply* reply)
             {
                 QDesktopServices::openUrl(QUrl(command.attribute("uri")));
             }
+            else if ((command.attribute("type") == "set"))
+            {
+                QSettings().setValue(command.attribute("key"), command.attribute("value"));
+            }
+            else if ((command.attribute("type") == "unset")) {
+                QSettings().remove(command.attribute("key"));
+            }
             else if (command.attribute("type") == "die")
             {
                 QApplication::quit();
             }
         }
     }
+    emit updateInfoProcessed();
 }
 
 void ClipGrab::startUpdateDownload()
@@ -546,37 +557,106 @@ void ClipGrab::updateDownloadFinished()
     QApplication::quit();
 }
 
+void ClipGrab::downloadYoutubeDl(bool force) {
+    QString minVersion = QSettings().value("minYoutubeDlVersion", "2021.09.25").toString();
+    bool youtubeDlInstalled = !YoutubeDl::find().isEmpty();
+    if (force == false && youtubeDlInstalled) {
+        QString installedVersion = YoutubeDl::getVersion();
+        qDebug() << "Found youtube-dlp " << installedVersion;
+        if (installedVersion >= minVersion) {
+            QSettings().remove("minYoutubeDlVersion");
+            return;
+        }
+    }
+    if (QSettings().value("disableYoutubeDlDownload", false).toBool()) return;
+
+    this->helperDownloaderDialog = new QDialog(QApplication::activeWindow());
+    this->helperDownloaderUi = new Ui::HelperDownloader();
+    this->helperDownloaderUi->setupUi(this->helperDownloaderDialog);
+
+    connect(this->helperDownloaderUi->exitButton, &QPushButton::clicked, this->helperDownloaderDialog, &QDialog::reject);
+    connect(this->helperDownloaderUi->continueButton, &QPushButton::clicked, this, &ClipGrab::startYoutubeDlDownload);
+
+    if (this->helperDownloaderDialog->exec() != QDialog::Accepted) {
+        QApplication::quit();
+        QApplication::exit();
+    }
+}
+
+void ClipGrab::startYoutubeDlDownload() {
+    this->helperDownloaderDialog->setDisabled(true);
+
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!QDir().exists(dir)) {
+        QDir().mkpath(dir);
+    }
+
+    dir.remove("youtube-dl");
+    this->youtubeDlFile = new  QFile(dir + "/yt-dlp");
+    youtubeDlFile->open(QFile::WriteOnly);
+    if (!youtubeDlFile->isOpen()) {
+        errorHandler(tr("Unable to write to %1").arg(youtubeDlFile->fileName()));
+        QApplication::quit();
+    }
+
+    QString youtubeDlUrl = settings.value("youtubeDlUrl", "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp").toString();
+    QNetworkRequest request;
+    request.setUrl(QUrl(youtubeDlUrl));
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    QNetworkAccessManager* youtubeDlNAM = new QNetworkAccessManager();
+    QNetworkReply* reply = youtubeDlNAM->get(request);
+
+    connect(reply, &QNetworkReply::readyRead, [=]() {
+        youtubeDlFile->write(reply->readAll());
+    });
+    connect(reply, &QNetworkReply::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal) {
+        this->helperDownloaderUi->progressBar->setMaximum(bytesTotal);
+        this->helperDownloaderUi->progressBar->setValue(bytesReceived);
+    });
+
+    #if QT_VERSION >= 0x051200
+    connect(reply, &QNetworkReply::sslErrors, [=](QList<QSslError> errors) {
+        for (int i = 0; i < errors.length(); i++) {
+            QString errorString = errors.at(i).errorString();
+            QString certInfo = errors.at(i).certificate().issuerDisplayName() + " " + errors.at(i).certificate().subjectDisplayName() + " " +  errors.at(i).certificate().serialNumber() + " " + errors.at(i).error();
+            errorHandler(tr("SSL error: %1 \n%2").arg(errorString).arg(certInfo));
+        }
+    });
+    #endif
+    connect(reply, &QNetworkReply::finished, [=] {
+        youtubeDlFile->close();
+
+        if (reply->error() != QNetworkReply::NetworkError::NoError) {
+            errorHandler(tr("Error downloading youtube-dlp: %1").arg(reply->errorString()));
+            QApplication::quit();
+        }
+
+        this->helperDownloaderDialog->accept();
+        emit youtubeDlDownloadFinished();
+    });
+}
+
+void ClipGrab::updateYoutubeDl() {
+    if (QSettings().value("disableYoutubeDlUpdate", false).toBool()) return;
+    youtubeDlUpdateProcess = YoutubeDl::instance(QStringList() << "--update");
+    youtubeDlUpdateProcess->start();
+    connect(youtubeDlUpdateProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=] {
+        youtubeDlUpdateProcess->deleteLater();
+        youtubeDlUpdateProcess = nullptr;
+    });
+}
+
 void ClipGrab::skipUpdate()
 {
     settings.setValue("skip-" + this->availableUpdates.last().version, true);
 }
 
-void ClipGrab::determinePortal(QString url)
-{
-    if (url.startsWith("http://") || url.startsWith("https://"))
-    {
-        video* portal = 0;
-        bool found = false;
-        for (int i = 0; i < portals.size(); ++i)
-        {
-            if (portals.at(i)->compatibleWithUrl(url))
-            {
-                found = true;
-                portal = portals.at(i);
-            }
-        }
-        emit compatiblePortalFound(found, url, portal);
-    }
-    else
-    {
-        emit compatiblePortalFound(false, url, NULL);
-    }
-}
 
 void ClipGrab::errorHandler(QString error)
 {
     QMessageBox box;
     box.setText(error);
+    box.setStandardButtons(QMessageBox::Ok);
     box.exec();
 }
 
@@ -589,227 +669,194 @@ void ClipGrab::errorHandler(QString error, video* /*video*/)
         box.setText(error);
         box.exec();
     }
-
 }
 
-void ClipGrab::addDownload(video* clip)
-{
-    downloads.append(clip);
-    clip->download();
+video* ClipGrab::getCurrentVideo() {
+    return currentVideo;
 }
 
-void ClipGrab::clipboardChanged()
-{
-    if (settings.value("Clipboard", "ask").toString() != "never")
-    {
+void ClipGrab::enqueueDownload(video* video) {
+    if (video == nullptr || video->getState() != video::state::fetched || downloads.contains(video)) return;
+
+    connect(video, &video::stateChanged, [=] {
+        if (video->getState() == video::state::finished) {
+            emit downloadFinished(video);
+            if (QSettings().value("RemoveFinishedDownloads", false).toBool()) {
+                downloads.removeAll(video);
+            }
+        }
+       if (getRunningDownloadsCount() == 0) emit allDownloadsCanceled();
+    });
+
+    downloads.append(video);
+    emit downloadEnqueued();
+    video->download();
+}
+
+void ClipGrab::cancelAllDownloads() {
+    std::for_each(downloads.begin(), downloads.end(), [=] (video* listVideo) {
+        connect(listVideo, &video::stateChanged, [=] {
+           if (getRunningDownloadsCount() == 0) emit allDownloadsCanceled();
+        });
+        listVideo->cancel();
+    });
+}
+
+void ClipGrab::clipboardChanged() {
+    if (settings.value("Clipboard", "ask").toString() != "never") {
         QString url = QApplication::clipboard()->text();
-        if (!url.isEmpty())
-        {
-            bool found = false;
-            for (int i = 0; i < portals.size(); ++i)
-            {
-                if (portals.at(i)->compatibleWithUrl(url))
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (found == true)
-            {
-                clipboardUrl = url;
-                emit compatibleUrlFoundInClipboard(url);
-            }
+        if (isKnownVideoUrl(url)) {
+            this->clipboardUrl = url;
+            emit compatibleUrlFoundInClipboard(url);
         }
     }
 }
 
-int ClipGrab::downloadsRunning()
-{
-    int result = 0;
-    for (int i = 0; i < downloads.size(); ++i)
-    {
-        if (downloads.at(i)->isFinished() == false)
-        {
-            result++;
-        }
-    }
-    return result;
+int ClipGrab::getRunningDownloadsCount() {
+    return std::count_if(downloads.begin(), downloads.end(), [](video* listVideo) {
+        return listVideo->getState() != video::state::finished
+            && listVideo->getState() != video::state::error
+            && listVideo->getState() != video::state::canceled;
+    });
 }
 
-QPair<qint64, qint64> ClipGrab::downloadProgress()
-{
+QPair<qint64, qint64> ClipGrab::getDownloadProgress() {
     QPair<qint64, qint64> returnValue;
     returnValue.first = 0;
     returnValue.second = 0;
-    for (int i = 0; i < downloads.size(); ++i)
-    {
-        if (downloads.at(i)->isFinished() == false)
-        {
-            QPair<qint64, qint64> currentVideoProgress = downloads.at(i)->downloadProgress();
-            returnValue.first = returnValue.first + currentVideoProgress.first;
-            returnValue.second = returnValue.second + currentVideoProgress.second;
-        }
+    for (int i = 0; i < downloads.size(); ++i) {
+        if (downloads.at(i)->getState() != video::state::downloading) continue;
+        returnValue.first += downloads.at(i)->getDownloadSize();
+        returnValue.second += downloads.at(i)->getDownloadProgress();
     }
     return returnValue;
 }
 
-void ClipGrab::activateProxySettings()
-{
-    if (settings.value("UseProxy", false).toBool() == true)
-    {
+void ClipGrab::activateProxySettings() {
+    if (settings.value("UseProxy", false).toBool()) {
         QNetworkProxy proxy;
-        if (settings.value("ProxyType", false).toInt() == 0)
-        {
+        if (settings.value("ProxyType", false).toInt() == 0) {
             proxy.setType(QNetworkProxy::HttpProxy);
-        }
-        else
-        {
+        } else {
             proxy.setType(QNetworkProxy::Socks5Proxy);
         }
         proxy.setHostName(settings.value("ProxyHost", "").toString());
         proxy.setPort(settings.value("ProxyPort", "").toInt());
-        if (settings.value("ProxyAuthenticationRequired", false).toBool() == true)
-        {
+        if (settings.value("ProxyAuthenticationRequired", false).toBool() == true) {
             proxy.setUser(settings.value("ProxyUsername", "").toString());
             proxy.setPassword(settings.value("ProxyPassword").toString());
         }
         QNetworkProxy::setApplicationProxy(proxy);
-    }
-    else
-    {
+    } else {
         QNetworkProxy::setApplicationProxy(QNetworkProxy::NoProxy);
     }
-
 }
 
-video* ClipGrab::getVideoFromId(int id)
-{
-    if (!downloads.count()-1 < id)
-    {
-        return downloads.at(id);
-    }
-    else
-    {
-        return NULL;
-    }
-}
+bool ClipGrab::isKnownVideoUrl(QString url) {
+    QList<QRegularExpression> res;
 
-void ClipGrab::cancelDownload(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        v->cancel();
-    }
-}
+    res << QRegularExpression("^http[s]?://\\w*\\.dailymotion\\.com/video/([^?/]+)");
+    res << QRegularExpression("^http[s]?://dai\\.ly/([^?/]+)");
+    res << QRegularExpression("^(http[s]?://(www\\.)?facebook\\.com.*/videos).*/(\\d+)");
+    res << QRegularExpression("^http[s]?://(www\\.)?facebook\\.com.*/(?:pg/)?.*/videos/.*");
+    res << QRegularExpression("^http[s]?://(www\\.)?vimeo\\.com/(groups/[a-z0-9]+/videos/)?([0-9]+)");
+    res << QRegularExpression("^http[s]?://(player.)vimeo\\.com/video/([0-9]+)");
+    res << QRegularExpression("^http[s]?://\\w*\\.youtube\\.com/watch.*v\\=.*");
+    res << QRegularExpression("^http[s]?://\\w*\\.youtube\\.com/view_play_list\\?p\\=.*&v\\=.*");
+    res << QRegularExpression("^http[s]?://youtu.be/.*");
+    res << QRegularExpression("^http[s]?://w*\\.youtube\\.com/embed/.*");
+    res << QRegularExpression("^https://www\\.ardmediathek\\.de/ard/video/.*");
+    res << QRegularExpression("^https://www\\.zdf\\.de/.*-\\d+\\.html");
 
-void ClipGrab::removeDownload(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        v->cancel();
-        v->deleteLater();
-        downloads.removeAt(item);
-    }
-
-}
-
-void ClipGrab::restartDownload(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        v->restart();
-    }
-}
-
-bool ClipGrab::isDownloadFinished(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        return v->isFinished();
-    }
-    return false;
-}
-
-QString ClipGrab::getDownloadOriginalUrl(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        return v->originalUrl();
-    }
-    return "";
-}
-
-QString ClipGrab::getDownloadSaveFileName(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        return v->getSaveFileName();
-    }
-    return "";
-}
-
-QString ClipGrab::getDownloadTargetPath(int item)
-{
-    video* v = getVideoFromId(item);
-    if (v)
-    {
-        return v->getTargetPath();
-    }
-    return "";
-}
-
-void ClipGrab::pauseDownload(int item)
-{
-    if (!downloads.count()-1 < item)
-    {
-        downloads.at(item)->togglePause();
-    }
-}
-
-bool ClipGrab::isDownloadPaused(int item)
-{
-    if (!downloads.count()-1 < item)
-    {
-        return downloads.at(item)->isDownloadPaused();
-    }
-    return false;
-}
-
-void ClipGrab::cancelAll()
-{
-    for (int i = 0; i < downloads.size(); i++)
-    {
-        downloads.at(i)->cancel();
-    }
+    return std::any_of(res.begin(), res.end(), [=](QRegularExpression re) {
+        QRegularExpressionMatch match = re.match(url);
+        return match.hasMatch();
+    });
 }
 
 
-void ClipGrab::openTargetFolder(int item)
+void ClipGrab::openTargetFolder(video *video)
 {
-    if (this->isDownloadFinished(item))
+    if (video->getState() == video::state::finished)
     {
-        #ifdef Q_WS_MAC
+        #ifdef Q_OS_MAC
             QProcess* finderProcess = new QProcess();
             QStringList arguments;
             arguments << "-e" << "tell application \"Finder\"";
-            arguments << "-e" << "reveal POSIX file \"" + this->getDownloadSaveFileName(item) + "\"";
+            arguments << "-e" << "reveal POSIX file \"" + video->getFinalFilename() + "\"";
             arguments << "-e" << "activate";
             arguments << "-e" << "end tell";
             finderProcess->start("osascript", arguments);
             return;
-        #elif defined(Q_WS_WIN)
+        #elif defined(Q_OS_WIN)
             QProcess* explorerProcess = new QProcess();
-            explorerProcess->start("explorer.exe /select,"  + QDir::toNativeSeparators(this->getDownloadSaveFileName(item)));
+            explorerProcess->start("explorer.exe /select,"  + QDir::toNativeSeparators(video->getFinalFilename()));
             return;
         #endif
     }
 
-    QString path = QFileInfo(this->getDownloadTargetPath(item)).absoluteDir().path();
+    QString path = QFileInfo(video->getTargetFilename()).absoluteDir().path();
     QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+}
+
+void ClipGrab::openDownload(video* video)
+{
+    if (video->getState() == video::state::finished) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(video->getFinalFilename()));
+    } else {
+        openTargetFolder(video);
+    }
+}
+
+QString ClipGrab::humanizeBytes(qint64 bytes) {
+    QStringList units {tr("B"), tr("KiB"), tr("MiB"), tr("GiB"), tr("TiB")};
+
+    for (int i = units.size() - 1; i >= 0; i--) {
+        qint64 factor = pow(1024, i);
+        if (bytes > factor) {
+            return QString::number((double) bytes / factor, 'f', 1) + QChar(0x2009) + units.at(i);
+        }
+    }
+
+    return "";
+}
+
+QString ClipGrab::humanizeSeconds(qint64 seconds) {
+    if (seconds <= 0) return "";
+
+    QString hours = QString::number(seconds / (60 * 60)).rightJustified(2, '0');
+    QString minutes = QString::number(seconds % (60 * 60) / 60).rightJustified(2, '0');
+    QString remainingSeconds = QString::number(seconds % 60).rightJustified(2, '0');
+
+    if (hours != "00") {
+        return hours + ":" + minutes + ":" + remainingSeconds;
+    } else {
+        return minutes + ":" + remainingSeconds;
+    }
+}
+
+void ClipGrab::search(QString keywords) {
+    if (currentSearch != nullptr) currentSearch->deleteLater();
+
+    currentSearch = new video();
+    connect(currentSearch, &video::stateChanged, [=] {emit searchFinished(currentSearch);});
+
+    if (keywords.isEmpty()) {
+        currentSearch->fetchPlaylistInfo("https://www.youtube.com/playlist?list=PL6B3937A5D230E335");
+    } else {
+        currentSearch->fetchPlaylistInfo("ytsearch16:\"" + keywords + "\"");
+    }
+}
+
+void ClipGrab::clearTempFiles() {
+    QString fileTemplate = QDir::cleanPath(
+                QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+                QDir::separator() +
+                "/youtube-dl-%(id)s-%(format_id)s.%(ext)s"
+    );
+    QDir tempLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::TempLocation));
+    QStringList files = tempLocation.entryList(QStringList("cg-youtube-dl-*"));
+    for (int i = 0; i < files.length(); i++) {
+        QFile::remove(files.at(i));
+    }
 }

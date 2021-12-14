@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
-<defaultcodec>UTF-8</defaultcodec>
+<TS version="2.1" language="en_US">
 <context>
     <name>ClipGrab</name>
     <message>
@@ -10,62 +9,125 @@
     </message>
     <message>
         <source>Downloading update … %1/%2 MBytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualização do download … %1/%2 MBytes</translation>
     </message>
     <message>
         <source>There was an error while downloading the update.: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocorreu um erro baixando a atualização.: %1</translation>
     </message>
     <message>
         <source>The fingerprint of the downloaded update file could not be verified: %1 should have been %2</source>
-        <translation type="unfinished"></translation>
+        <translation>A assinatura do arquivo atualizado baixado não pôde ser verificada: %1 deveria ter sido %2</translation>
     </message>
     <message>
         <source>Could not open update file.</source>
+        <translation>Não foi possível abrir o arquivo de atualização.</translation>
+    </message>
+    <message>
+        <source>Unable to write to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error downloading youtube-dl: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TiB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSL error: %1 
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ClipboardDialogue</name>
+    <name>DownloadListModel</name>
     <message>
-        <source>ClipGrab: Video discovered in your clipboard</source>
-        <translation type="obsolete">ClipGrab: Foi detectado um vídeo em sua área de transferência</translation>
+        <source>Starting ...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;ClipGrab has discovered the address of a compatible video in your clipboard.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Do you want to download it now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;ClipGrab detectou a localização de um vídeo compatível em sua área de transferência.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Deseja baixá-lo agora?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Converting ...</source>
+        <translation type="unfinished">Convertendo...</translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished">Finalizado</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portal</source>
+        <translation type="unfinished">Portal</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished">Título</translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="unfinished">Formato</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished">Progresso</translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>LoginDialog</name>
+    <name>HelperDownloader</name>
     <message>
-        <source>Confirmation or Login Required</source>
+        <source>Dialog</source>
+        <translation type="unfinished">Diálogo</translation>
+    </message>
+    <message>
+        <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Confirmation or login required</source>
+        <source>Exit ClipGrab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This video requires you to sign in or confirm your access before downloading it.</source>
+        <source>Downloading youtube-dl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>about:blank</source>
-        <translation type="unfinished">about:blank</translation>
-    </message>
-    <message>
-        <source>Remember login</source>
+        <source>&lt;p&gt;ClipGrab uses youtube-dl in order to download videos from the Internet. youtube-dl is developed by an independent team of Open Source developers and released into the public domain.&lt;br&gt;Learn more on &lt;a href=&quot;https://youtube-dl.org&quot;&gt;youtube-dl.org&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Click on &lt;em&gt;Continue&lt;/em&gt; to download youtube-dl.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -73,21 +135,15 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <source>Select Target</source>
-        <translation>Selecione um destino</translation>
+        <translation>Selecione um Destino</translation>
     </message>
     <message>
         <source>Please wait while ClipGrab is loading information about the video ...</source>
-        <translation>Espere enquanto ClipGrab está carregando informações a respeito do vídeo ...</translation>
+        <translation>Espere enquanto ClipGrab está carregando informações sobre o vídeo ...</translation>
     </message>
     <message>
         <source>Please enter the link to the video you want to download in the field below.</source>
-        <translatorcomment>The English word &quot;link&quot; is frequently used without translation in Brazil. Trying to translate it into Portuguese probably would lead to misinterpretation. I am unable to translate it into Portuguese as written in Portugal and other Portuguese speaking countries.</translatorcomment>
-        <translation>Escreva o link para o vídeo o qual você deseja baixar no campo abaixo.</translation>
-    </message>
-    <message>
-        <source>The link you have entered seems to not be recognised by any of the supported portals.&lt;br/&gt;Now ClipGrab will check if it can download a video from that site anyway.</source>
-        <translatorcomment>The word &quot;portals&quot; is translated into Portuguese as &quot;portais&quot;. I believe the English word &quot;sites&quot; is more adequate.</translatorcomment>
-        <translation>O link que você digitou aparentemente não é reconhecido por nenhum dos sites suportados.&lt;br/&gt;Agora ClipGrab irá checar se é possível baixar o vídeo a partir deste link apesar disto.</translation>
+        <translation>Informe no campo abaixo o link do vídeo que você deseja baixar.</translation>
     </message>
     <message>
         <source>No downloadable video could be found.&lt;br /&gt;Maybe you have entered the wrong link or there is a problem with your connection.</source>
@@ -115,80 +171,62 @@ p, li { white-space: pre-wrap; }
         <translation>Existe ainda pelo menos um download em progresso.&lt;br /&gt;Se você fechar o programa agora, todos os downloads serão cancelados e não poderão ser recuperados depois.&lt;br /&gt;Você realmente deseja fechar o ClipGrab agora?</translation>
     </message>
     <message>
+        <source>&amp;Open downloaded file</source>
+        <translation>&amp;Abrir arquivo baixado</translation>
+    </message>
+    <message>
+        <source>Open &amp;target folder</source>
+        <translation>Abrir &amp;pasta de destino</translation>
+    </message>
+    <message>
+        <source>&amp;Pause download</source>
+        <translation>&amp;Pausar download</translation>
+    </message>
+    <message>
+        <source>&amp;Restart download</source>
+        <translation>&amp;Reiniciar download</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel download</source>
+        <translation>&amp;Cancelar download</translation>
+    </message>
+    <message>
+        <source>Copy &amp;video link</source>
+        <translation>Copiar link do &amp;vídeo</translation>
+    </message>
+    <message>
+        <source>Open video link in &amp;browser</source>
+        <translatorcomment>I&apos;m sure all brazilians would call it &quot;browser&quot; but navegador de internet is the correct translation
+</translatorcomment>
+        <translation>Abrir link do vídeo no &amp;navegador de internet</translation>
+    </message>
+    <message>
+        <source>Resume download</source>
+        <translation>Continuar download</translation>
+    </message>
+    <message>
+        <source>Show in &amp;Finder</source>
+        <translatorcomment>Finder is a Mac IOs feature, not sure what the name in Portuguese is and if Finder needs to be translated</translatorcomment>
+        <translation>Mostrar no &amp;Finder</translation>
+    </message>
+    <message>
+        <source>No results found.</source>
+        <translation>Nenhum resultado encontrado.</translation>
+    </message>
+    <message>
         <source>Download finished</source>
-        <translation>Download finalizado</translation>
-    </message>
-    <message>
-        <source>Downloading and converting ?%title? is now finished.</source>
-        <translation type="obsolete">?%title? baixado e conversão finalizada.</translation>
-    </message>
-    <message>
-        <source>All downloads finished</source>
-        <translation>Todos os downloads estão finalizados</translation>
-    </message>
-    <message>
-        <source>ClipGrab has finished downloading and converting all selected videos.</source>
-        <translation>ClipGrab baixou e converteu todos os vídeos selecionados.</translation>
-    </message>
-    <message>
-        <source>ClipGrab</source>
-        <translation>ClipGrab</translation>
-    </message>
-    <message>
-        <source> MiB</source>
-        <translation> MiB</translation>
-    </message>
-    <message>
-        <source> KiB</source>
-        <translation> Kib</translation>
-    </message>
-    <message>
-        <source>Currently no downloads in progress.</source>
-        <translation>No momento não existem downloads em progresso.</translation>
-    </message>
-    <message>
-        <source>ClipGrab - Download and Convert Online Videos</source>
-        <translatorcomment>Trying to translate &quot;Online&quot; into Portuguese (at least in Brazil) would probably lead to misinterpretation.</translatorcomment>
-        <translation>ClipGrab - Baixa e Converte Vídeos Online</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Downloading and converting “%title” is now finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Open downloaded file</source>
+        <source>All downloads finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open &amp;target folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Pause download</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Restart download</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cancel download</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy &amp;video link</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open video link in &amp;browser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resume download</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show in &amp;Finder</source>
+        <source>ClipGrab has finished downloading and converting all selected videos.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -196,7 +234,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindowClass</name>
     <message>
         <source>ClipGrab - Download and Convert Online Videos</source>
-        <translation>ClipGrab - Baixa e Converte Vídeos Online</translation>
+        <translation>ClipGrab - Baixe e Converta Vídeos Online</translation>
     </message>
     <message>
         <source>Search</source>
@@ -205,10 +243,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Enter keywords in the box below in order to search videos on YouTube</source>
         <translation>Escreva palavras-chave no espaço abaixo para procurar vídeos no YouTube</translation>
-    </message>
-    <message>
-        <source>about:blank</source>
-        <translation>about:blank</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -224,7 +258,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please enter the link to the video you want to download in the field below.</source>
-        <translation>Ponha o link do vídeo que você deseja baixar no campo abaixo.</translation>
+        <translation>Informe no campo abaixo o link do vídeo que você deseja baixar.</translation>
     </message>
     <message>
         <source>Format:</source>
@@ -241,22 +275,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Open the target folder of the selected download</source>
         <translation>Abrir a pasta destino do download selecionado</translation>
-    </message>
-    <message>
-        <source>Portal</source>
-        <translation>Portal</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Título</translation>
-    </message>
-    <message>
-        <source>Format</source>
-        <translation>Formato</translation>
-    </message>
-    <message>
-        <source>Progress</source>
-        <translation>Progresso</translation>
     </message>
     <message>
         <source>Pause selected download</source>
@@ -312,7 +330,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Here you can configure how ClipGrab behaves when a downloadable video is discovered in your clipboard.</source>
-        <translation>Aqui você pode configurar como ClipGrab deve comportar-se quando um vídeo baixado é encontrado na sua área de transferência.</translation>
+        <translation>Aqui você pode configurar como ClipGrab deve se comportar quando um vídeo baixado é encontrado na sua área de transferência.</translation>
     </message>
     <message>
         <source>Always download</source>
@@ -416,7 +434,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Here you can change the language of ClipGrab.</source>
-        <translation>Aqui você pode mudar o idioma de ClipGrab.</translation>
+        <translation>Aqui você pode mudar o idioma do ClipGrab.</translation>
     </message>
     <message>
         <source>Please select a language from the list below. You have to restart ClipGrab in order to apply you selection.</source>
@@ -444,7 +462,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Audio</source>
-        <translation>Som</translation>
+        <translation>Áudio</translation>
     </message>
     <message>
         <source>Codec</source>
@@ -456,7 +474,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Disable Audio</source>
-        <translation>Desativar o som</translation>
+        <translation>Desativar áudio</translation>
     </message>
     <message>
         <source>Video</source>
@@ -484,32 +502,24 @@ p, li { white-space: pre-wrap; }
         <source>&lt;h2&gt;Translation&lt;/h2&gt;
 ClipGrab is already available in many languages. If ClipGrab has not been translated into your language yet and if you want to contribute a translation, please check &lt;a href=&quot;http://clipgrab.de/translate&quot;&gt;http://clipgrab.de/translate&lt;/a&gt; for further information.</source>
         <translation>&lt;h2&gt;Tradução&lt;/h2&gt;
-ClipGrab já está disponível em vários idiomas. Se ClipGrab ainda não foi traduzido para o seu idioma e você quer contribuir com sua tradução, consulte &lt;a href=&quot;http://clipgrab.de/translate&quot;&gt;http://clipgrab.de/translate&lt;/a&gt; para mais informações.</translation>
-    </message>
-    <message>
-        <source>&lt;h2&gt;Thanks&lt;/h2&gt;
-ClipGrab relies on the work of the Qt project and the ffmpeg team.&lt;br&gt;
-Visit &lt;a href=&quot;http://qt.nokia.com&quot;&gt;qt.nokia.com&lt;/a&gt; and &lt;a href=&quot;https://ffmpeg.org&quot;&gt;ffmpeg.org&lt;/a&gt; for further information.</source>
-        <translation type="obsolete">&lt;h2&gt;Obrigado&lt;/h2&gt;
-ClipGrab depende do trabalho da equipe do projeto Qt e do time ffmpeg.&lt;br&gt;
-Visite &lt;a href=&quot;http://qt.nokia.com&quot;&gt;qt.nokia.com&lt;/a&gt; y &lt;a href=&quot;https://ffmpeg.org&quot;&gt;ffmpeg.org&lt;/a&gt; para mais informações.</translation>
+ClipGrab já está disponível em vários idiomas. Se o ClipGrab ainda não foi traduzido para o seu idioma e você quer contribuir com sua tradução, consulte &lt;a href=&quot;http://clipgrab.de/translate&quot;&gt;http://clipgrab.de/translate&lt;/a&gt; para mais informações.</translation>
     </message>
     <message>
         <source>Ignore SSL errors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;h2&gt;Thanks&lt;/h2&gt;
-ClipGrab relies on the work of the Qt project and the ffmpeg team.&lt;br&gt;
-Visit &lt;a href=&quot;https://www.qt.io&quot;&gt;qt.io&lt;/a&gt; and &lt;a href=&quot;https://ffmpeg.org&quot;&gt;ffmpeg.org&lt;/a&gt; for further information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignore erros de SSL</translation>
     </message>
     <message>
         <source>Remember logins</source>
-        <translation type="unfinished"></translation>
+        <translation>Memorize logins</translation>
     </message>
     <message>
         <source>Remember video quality</source>
+        <translation>Memorize qualidade de vídeo</translation>
+    </message>
+    <message>
+        <source>&lt;h2&gt;Thanks&lt;/h2&gt;
+ClipGrab relies on the work of the Qt project, the ffmpeg team, and the youtube-dl team.&lt;br&gt;
+Visit &lt;a href=&quot;https://www.qt.io&quot;&gt;qt.io&lt;/a&gt;, &lt;a href=&quot;https://ffmpeg.org&quot;&gt;ffmpeg.org&lt;/a&gt;, and &lt;a href=&quot;https://youtube-dl.org&quot;&gt;youtube-dl.org&lt;/a&gt; for further information.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -517,21 +527,7 @@ Visit &lt;a href=&quot;https://www.qt.io&quot;&gt;qt.io&lt;/a&gt; and &lt;a href
     <name>MetadataDialog</name>
     <message>
         <source>ClipGrab - enter metadata</source>
-        <translation>ClipGrab - Escriva os metadados</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:600;&quot;&gt;Please enter the metadata for your download. If you don&apos;t want to add&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:600;&quot;&gt;metadata, just leave the fields empty.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:600;&quot;&gt;Escreva os metadados para o seu download. Se você não quer adicioná-los agora,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:600;&quot;&gt;apenas deixe os campos em branco.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>ClipGrab - entre os metadados</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -543,49 +539,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please enter the metadata for your download. If you don&apos;t want to add metadata, just leave the fields empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Favor entrar os metadados para o seu download. Se você não quiser adicionar metadados, deixe os campos em branco.</translation>
     </message>
 </context>
 <context>
     <name>UpdateMessage</name>
     <message>
         <source>Update for ClipGrab</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualização para o ClipGrab</translation>
     </message>
     <message>
         <source>ClipGrab %1 is now available (you are using %2). Would you like to install the update?</source>
-        <translation type="unfinished"></translation>
+        <translation>ClipGrab %1 já está disponível (você está usando %2). Você gostaria de instalar a atualização?</translation>
     </message>
     <message>
         <source>There is an update for your version of ClipGrab!</source>
-        <translation type="unfinished"></translation>
+        <translation>Existe uma atualização para a sua versão do ClipGrab!</translation>
     </message>
     <message>
         <source>Skip this update</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignore esta atualização</translation>
     </message>
     <message>
         <source>Download update</source>
-        <translation type="unfinished"></translation>
+        <translation>Baixe a atualização</translation>
     </message>
     <message>
         <source>about:blank</source>
-        <translation type="unfinished">about:blank</translation>
+        <translation>about:blank</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"></translation>
+        <translation>Lembre-me mais tarde</translation>
     </message>
     <message>
         <source>The update will begin in just a moment …</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>YoutubePassword</name>
-    <message>
-        <source>about:blank</source>
-        <translation type="obsolete">about:blank</translation>
+        <translation>A atualização vai começar em breve ...</translation>
     </message>
 </context>
 <context>
@@ -599,7 +588,7 @@ p, li { white-space: pre-wrap; }
     <name>converter_ffmpeg</name>
     <message>
         <source>MPEG4</source>
-        <translation>MPEG-4</translation>
+        <translation>MPEG4</translation>
     </message>
     <message>
         <source>WMV (Windows)</source>
@@ -611,226 +600,45 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>MP3 (audio only)</source>
-        <translation>MP3 (apenas som)</translation>
+        <translation>MP3 (apenas áudio)</translation>
     </message>
     <message>
         <source>OGG Vorbis (audio only)</source>
-        <translation>OGG Vorbis (apenas som)</translation>
+        <translation>OGG Vorbis (apenas áudio)</translation>
     </message>
     <message>
         <source>No installed version of avconv or ffmpeg coud be found. Converting files and downloading 1080p videos from YouTube is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível encontrar versão instalada do avconv ou ffmpeg. Converter arquivos e baixar vídeos 1080p do YouTube não é suportado.</translation>
     </message>
     <message>
         <source>The installed version of %1 is outdated.
 Downloading 1080p videos from YouTube is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>A versão instalada do %1 está desatualizada. Baixar vídeos 1080p do YouTuvbe não é suportado.</translation>
     </message>
     <message>
         <source>Original (audio only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Original (apenas áudio)</translation>
     </message>
 </context>
 <context>
     <name>messageDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Diálogo</translation>
     </message>
     <message>
         <source>Close this message</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar esta mensagem</translation>
     </message>
     <message>
         <source>about:blank</source>
-        <translation type="unfinished">about:blank</translation>
+        <translation>about:blank</translation>
     </message>
 </context>
 <context>
     <name>video</name>
     <message>
-        <source>Downloading ...</source>
-        <translation>Baixando...</translation>
-    </message>
-    <message>
-        <source> MiB</source>
-        <translation> MiB</translation>
-    </message>
-    <message>
-        <source>Converting ...</source>
-        <translation>Convertendo...</translation>
-    </message>
-    <message>
-        <source>Finished</source>
-        <translation>Finalizado</translation>
-    </message>
-    <message>
-        <source>Finished!</source>
-        <translation>Finalizado!</translation>
-    </message>
-    <message>
-        <source>Cancelled</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>video_clipfish</name>
-    <message>
-        <source>normal</source>
-        <translation type="obsolete">normal</translation>
-    </message>
-</context>
-<context>
-    <name>video_collegehumor</name>
-    <message>
-        <source>normal</source>
-        <translation type="obsolete">normal</translation>
-    </message>
-</context>
-<context>
-    <name>video_dailymotion</name>
-    <message>
-        <source>HD (720p)</source>
-        <translation>Alta Definição (HD,720p)</translation>
-    </message>
-    <message>
-        <source>high (HQ)</source>
-        <translation type="obsolete">Alta Qualidade (HQ)</translation>
-    </message>
-    <message>
-        <source>normal (SD)</source>
-        <translation type="obsolete">Qualidade Normal (SD)</translation>
-    </message>
-    <message>
-        <source>HD (1080p)</source>
-        <translation type="unfinished">Alta Definição (HD,1080p)</translation>
-    </message>
-    <message>
-        <source>480p</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>380p</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>240p</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>video_facebook</name>
-    <message>
-        <source>HD</source>
-        <translation type="unfinished">Alta Definição (HD)</translation>
-    </message>
-    <message>
-        <source>normal</source>
-        <translation type="unfinished">normal</translation>
-    </message>
-</context>
-<context>
-    <name>video_heuristic</name>
-    <message>
-        <source>normal</source>
-        <translation>normal</translation>
-    </message>
-</context>
-<context>
-    <name>video_myspass</name>
-    <message>
-        <source>high</source>
-        <translation>alta</translation>
-    </message>
-</context>
-<context>
-    <name>video_myvideo</name>
-    <message>
-        <source>normal</source>
-        <translation type="obsolete">normal</translation>
-    </message>
-</context>
-<context>
-    <name>video_sevenload</name>
-    <message>
-        <source>normal</source>
-        <translation type="obsolete">normal</translation>
-    </message>
-    <message>
-        <source>HD</source>
-        <translation type="obsolete">Alta Definição (HD)</translation>
-    </message>
-    <message>
-        <source>This video appears to be protected and cannot be downloaded.</source>
-        <translation type="obsolete">Aparentemente este vídeo é protegido e não pode ser baixado.</translation>
-    </message>
-</context>
-<context>
-    <name>video_tudou</name>
-    <message>
-        <source>normal</source>
-        <translation type="obsolete">normal</translation>
-    </message>
-</context>
-<context>
-    <name>video_vimeo</name>
-    <message>
-        <source>HD</source>
-        <translation type="obsolete">Alta Definição (HD)</translation>
-    </message>
-    <message>
-        <source>high</source>
-        <translation type="obsolete">alta</translation>
-    </message>
-</context>
-<context>
-    <name>video_youtube</name>
-    <message>
-        <source>HD (1080p)</source>
-        <translation>Alta Definição (HD,1080p)</translation>
-    </message>
-    <message>
-        <source>HD (720p)</source>
-        <translation type="obsolete">Alta Definição (HD,720p)</translation>
-    </message>
-    <message>
-        <source>high (480p)</source>
-        <translation type="obsolete">alta (480p)</translation>
-    </message>
-    <message>
-        <source>normal (360p)</source>
-        <translation type="obsolete">normal (360p)</translation>
-    </message>
-    <message>
-        <source>low (240p)</source>
-        <translation type="obsolete">baixa (240p)</translation>
-    </message>
-    <message>
-        <source>normal</source>
-        <translation>normal</translation>
-    </message>
-    <message>
-        <source>HD (1440p)</source>
-        <translation type="unfinished">Alta Definição (HD,720p) {1440p?}</translation>
-    </message>
-    <message>
-        <source>4K (2160p)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5K (2880p)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>8K (4320p)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <translation type="unfinished">Original</translation>
-    </message>
-    <message>
-        <source>8K (4320p60)</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

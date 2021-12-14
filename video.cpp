@@ -1,6 +1,6 @@
 /*
     ClipGrab³
-    Copyright (C) Philipp Schmieder
+    Copyright (C) The ClipGrab Project
     http://clipgrab.de
     feedback [at] clipgrab [dot] de
 
@@ -23,523 +23,537 @@
 
 #include "video.h"
 
-video::video()
-{
-    handler = new http_handler;
-    connect(handler, SIGNAL(allDownloadsFinished()), this, SLOT(handleDownloads()));
-    connect(handler, SIGNAL(error(QString)), this, SLOT(networkError(QString)));
-    connect(this, SIGNAL(downloadFinished()), this, SLOT(startConvert()));
-    _treeItem = NULL;
-    _downloadPaused = false;
-    _isRestarted = false;
+video::video() {
+    selectedQuality = -1;
+    state = state::empty;
+
+    youtubeDl = nullptr;
+
+    targetConverter = nullptr;
+    cachedDownloadSize = 0;
+    cachedDownloadProgress = 0;
+    audioOnly = false;
 }
 
-bool video::supportsSearch()
-{
-    if (_supportsSearch == true)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+void video::startYoutubeDl(QStringList arguments) {
+    if (youtubeDl != nullptr) youtubeDl->deleteLater();
+
+    youtubeDl = YoutubeDl::instance(arguments);
+    connect(youtubeDl , QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &video::handleProcessFinished);
+    connect(youtubeDl , &QProcess::readyRead, this, &video::handleProcessReadyRead);
+    youtubeDl->start();
 }
 
-QString video::getName()
-{
-    return _name;
+void video::fetchPlaylistInfo(QString url) {
+    if (state != state::empty) return;
+    state = state::fetching;
+
+    this->url = url;
+
+    QStringList arguments;
+    arguments << "-J" << url;
+    arguments << "--yes-playlist";
+    arguments << "--flat-playlist";
+    startYoutubeDl(arguments);
 }
 
-QIcon* video::getIcon()
-{
-    if (_icon)
+void video::fetchInfo(QString url) {
+    if (state != state::empty) return;
+    state = state::fetching;
 
-    {
-        return _icon;
+    // youtube-dl fails on YouTube links that include ?list parameter
+    QUrl parsedUrl = QUrl(url);
+    if (parsedUrl.host() == "www.youtube.com" && parsedUrl.path() == "/watch") {
+        QString v = QUrlQuery(parsedUrl.query()).queryItemValue("v");
+        parsedUrl.setQuery("v=" + v);
+        url = parsedUrl.toString();
+    } else if (parsedUrl.host() == "youtu.be") {
+        QString v = parsedUrl.path();
+        parsedUrl.setUrl("https://www.youtube.com/watch?v=" + v);
     }
-    else
-    {
-        return new QIcon(QPixmap(":/img/icon.png"));
-    }
+
+    this->url = url;
+
+    QStringList arguments;
+    arguments << "-J";
+    arguments << "--no-playlist";
+    arguments << url;
+
+    startYoutubeDl(arguments);
 }
 
-bool video::compatibleWithUrl(QString url)
-{
-    for (int i = 0; i < this->_urlRegExp.size(); ++i)
-    {
-        if (this->_urlRegExp.at(i).indexIn(url)!=-1)
-        {
-            return true;
-        }
+void video::download() {
+    if ((state != state::fetched && state != state::paused && state != state::canceled) || selectedQuality <= -1) return;
+    state = state::downloading;
+
+    videoQuality quality = qualities.at(selectedQuality);
+    downloadSize = quality.videoFileSize + quality.audioFileSize;
+
+    QStringList arguments;
+
+    arguments << "--newline";
+    arguments << "--no-playlist";
+    arguments << "--no-mtime";
+
+    QString fileTemplate = QDir::cleanPath(
+                QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+                QDir::separator() +
+                "/cg-youtube-dl-%(id)s-%(format_id)s.%(ext)s"
+    );
+    arguments << "-o" << fileTemplate;
+
+    if (quality.audioFormat.isEmpty()) {
+        arguments << "-f" << quality.videoFormat;
+    } else if (audioOnly) {
+        arguments << "-f" << quality.audioFormat;
+    } else {
+        arguments << "-f" << quality.videoFormat + "+" + quality.audioFormat;
     }
 
-    return false;
+    arguments << url;
 
+    startYoutubeDl(arguments);
 }
 
-bool video::setUrl(QString url)
-{
-    _originalUrl = url;
+void video::cancel() {
+    if (state != state::downloading && state != state::paused) return;
 
-    if (_url.isEmpty())
-    {
-        this->_url = QUrl(url);
-        if (_url.isValid())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else
-    {
-        return false;
-    }
+    state = state::canceling;
+    if (youtubeDl != nullptr) youtubeDl->terminate();
 }
 
-void video::analyse()
-{
-    _finished = false;
+void video::pause() {
+    if (state!= state::downloading) return;
 
-    if (this->_url.isValid())
-    {
-        _step = 1;
-        handler->addDownload(_url.toString());
-		connect(this, SIGNAL(analysingFinished()), this, SLOT(slotAnalysingFinished()));
-    }
-    else
-    {
-        emit error("Url is not valid");
-    }
+    state = state::pausing;
+    if (youtubeDl != nullptr) youtubeDl->terminate();
 }
 
+void video::resume() {
+    if (state != state::paused) return;
 
+    download();
+}
 
-void video::handleDownloads()
-{
-    switch (this->_step)
-    {
-        case 1:
-        {
-            handler->downloads.at(0)->tempFile->close();
-            handler->downloads.at(0)->tempFile->open();
-            QByteArray data = handler->downloads.at(0)->tempFile->readAll();
-            handler->downloads.at(0)->tempFile->close();
-            QString html = QString::fromUtf8(data, data.size());
-            handler->clearDownloads();
-            parseVideo(html);
-            break;
-        }
+void video::restart() {
+    if (state != state::canceled && state != state::error) return;
 
-        case 3:
-        {
-            if (handler->downloads.size() == 1)
-            {
-                this->downloadFile = handler->downloads.at(0)->tempFile;
-                this->downloadFile->flush();
-                emit downloadFinished();
-            }
-            else
-            {
-                this->_step = 4;
+    download();
+}
 
-                QList<QFile*> files;
-                for (int i=0; i < handler->downloads.size(); i++)
-                {
-                    handler->downloads.at(i)->tempFile->flush();
-                    files << handler->downloads.at(i)->tempFile;
-                }
-                this->_progressBar->setMinimum(0);
-                this->_progressBar->setMaximum(0);
-                setToolTip("<strong>" + tr("Converting ...") + "</strong>");
-                this->downloadFile = new QTemporaryFile(QDir::tempPath() + "/clipgrab-concat--XXXXXX");
-                this->downloadFile->open(QIODevice::ReadOnly);
-                this->downloadFile->close();
+void video::fromJson(QByteArray data) {
+    if (state != state::empty) return;
+    handleInfoJson(data);
+}
 
-                converter_ffmpeg* ffmpeg = new converter_ffmpeg;
-                connect(ffmpeg, SIGNAL(conversionFinished()), this, SLOT(handleDownloads()));
-                ffmpeg->concatenate(files, this->downloadFile, this->_supportedQualities.at(_quality).containerName);
-            }
-            break;
+void video::handleInfoJson(QByteArray data) {
+    QJsonObject json = QJsonDocument::fromJson(data).object();
+
+    title = json.value("title").toString();
+    id = json.value("id").toString();
+
+    if (json.value("_type").toString() == "playlist") {
+        QJsonArray playlist = json.value("entries").toArray();
+        for (int i = 0; i < playlist.size(); i++) {
+            video* video = new class video;
+            video->fromJson(QJsonDocument(playlist.at(i).toObject()).toJson());
+            playlistVideos << video;
         }
 
-        case 4:
-        {
-            emit downloadFinished();
-			break;
+        state = state::fetched;
+        return;
+    } else if (json.value("_type").toString() == "url") {
+        portal = json.value("ie_key").toString().toLower();
+        if (portal == "generic") portal = QUrl(this->url).host();
+
+        url = json.value("url").toString();
+        if (QUrl(url).scheme().isEmpty() && portal == "youtube") {
+            url = "https://www.youtube.com/watch?v=" + url;
         }
-    }
-}
 
-void video::parseVideo(QString)
-{
-    emit error("Video format not implemented");
-}
-
-void video::changeProgress(qint64 bytesReceived, qint64 bytesTotal)
-{
-
-    //Only update if more than 128 new KiB have been received
-    if (bytesReceived < cachedProgress.first + 131072)
-    {
+        state = state::unfetched;
         return;
     }
 
-    if (this->_treeItem)
-    {
-        if (bytesTotal > 0)
-        {
-            this->_progressBar->setFormat("%p%");
-            this->_progressBar->setMaximum(bytesTotal);
-            this->_progressBar->setValue(bytesReceived);
-            setToolTip("<strong>" + tr("Downloading ...") + "</strong><br />" + QString::number((double)(bytesReceived)/1024/1024, QLocale::system().decimalPoint().toAscii(), 1) + tr(" MiB") + "/" + QString::number((double)bytesTotal/1024/1024, QLocale::system().decimalPoint().toAscii(), 1) + tr(" MiB"));
-        }
+    portal = json.value("extractor").toString().toLower();
+    if (portal.isEmpty()) portal = json.value("ie_key").toString().toLower();
+    else if (portal == "generic") portal = QUrl(this->url).host();
+
+    url = json.value("webpage_url").toString();
+    if (url.isEmpty()) url = json.value("url").toString();
+    if (QUrl(url).scheme().isEmpty() && portal == "youtube") {
+        url = "https://www.youtube.com/watch?v=" + url;
     }
-    else
-    {
-        qDebug() << bytesReceived << "of" << bytesTotal;
+
+    artist = json.value("artist").toString();
+    if (artist.isEmpty()) artist = json.value("user").toString();
+    if (artist.isEmpty()) artist = json.value("uploader").toString();
+
+    duration = json.value("duration").toDouble();
+
+    QJsonArray formats = json.value("formats").toArray();
+    QList<QJsonObject> videoFormats;
+    QList<QJsonObject> audioFormats;
+    QStringList acceptedExts = {"mp4", "m4a"};
+    if (QSettings().value("UseWebM", false).toBool()) {
+        acceptedExts << "webm" << "opus";
     }
-	
-	cachedProgress.first = bytesReceived;
-	cachedProgress.second = bytesTotal;
-	
-    emit progressChanged(bytesReceived, bytesTotal);
-}
-
-void video::setQuality(int quality)
-{
-    this->_quality = quality;
-}
-
-QString video::quality()
-{
-    return this->_supportedQualities.at(_quality).quality;
-}
-
-video* video::createNewInstance()
-{
-    return new video();
-}
-
-//Get pair of quality label QString and resolution int
-QList< QPair<QString, int> > video::getSupportedQualities()
-{
-    QList< QPair<QString, int> > result;
-    for (int i = 0; i < _supportedQualities.size(); ++i)
-    {
-        result << qMakePair(_supportedQualities.at(i).quality, _supportedQualities.at(i).resolution);
-    }
-    return result;
-}
-
-QString video::title()
-{
-    return _title;
-}
-
-void video::download()
-{
-    _step = 3;
-    handler->clearDownloads();
-
-    connect(handler, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(changeProgress(qint64, qint64)));
-
-    if (!this->_supportedQualities.at(_quality).videoUrl.isEmpty())
-    {
-        if (this->_supportedQualities.at(_quality).videoSegments.isEmpty())
-        {
-            qDebug() << "Downloading video file: " << this->_supportedQualities.at(_quality).videoUrl;
-            handler->addDownload(this->_supportedQualities.at(_quality).videoUrl, this->_supportedQualities.at(_quality).chunkedDownload);
-        }
-        else
-        {
-            qDebug() << "Downloading segmented video file: " << this->_supportedQualities.at(_quality).videoUrl;
-            handler->addDownload(this->_supportedQualities.at(_quality).videoUrl, this->_supportedQualities.at(_quality).videoSegments);
-        }
-    }
-    if (!this->_supportedQualities.at(_quality).audioUrl.isEmpty())
-    {
-        if (this->_supportedQualities.at(_quality).audioSegments.isEmpty())
-        {
-            qDebug() << "Downloading audio file: " << this->_supportedQualities.at(_quality).audioUrl;
-            handler->addDownload(this->_supportedQualities.at(_quality).audioUrl, this->_supportedQualities.at(_quality).chunkedDownload);
-        }
-        else
-        {
-            qDebug() << "Downloading segmented audio file: " << this->_supportedQualities.at(_quality).audioUrl;
-            handler->addDownload(this->_supportedQualities.at(_quality).audioUrl, this->_supportedQualities.at(_quality).audioSegments);
-        }
-    }
-}
-
-void video::setTreeItem(QTreeWidgetItem* item)
-{
-    this->_treeItem = item;
-}
-
-void video::setToolTip(QString tooltip)
-{
-    if (this->_treeItem)
-    {
-        for (int i = 0; i <= 3; i++)
-        {
-            this->_treeItem->setToolTip(i, tooltip);
-        }
-    }
-}
-
-void video::setFormat(int format)
-{
-    this->_format = format;
-}
-
-void video::startConvert()
-{
-    this->_progressBar->setMinimum(0);
-    this->_progressBar->setMaximum(0);
-    setToolTip("<strong>" + tr("Converting ...") + "</strong>");
-
-    connect(this->_converter, SIGNAL(conversionFinished()), this, SLOT(conversionFinished()));
-    this->_converter->startConversion(this->downloadFile, _targetPath, _supportedQualities.at(_quality).containerName, _metaTitle, _metaArtist,_converterMode);
-
-}
-
-void video::setConverter(converter* converter, int mode)
-{
-    _converter = converter;
-    _converterMode = mode;
-
-
-    //If audio track is available separately, only download audio
-    if (mode == 3 || mode == 4 || mode == 5)
-    {
-        if (!_supportedQualities.at(_quality).audioUrl.isEmpty())
-        {
-            _supportedQualities[_quality].videoUrl.clear();
-        }
-    }
-}
-
-void video::setTargetPath(QString target)
-{
-    _targetPath = target;
-}
-
-QString video::getSaveTitle()
-{
-    QString title = this->_title;
-    if (title.size() > 0)
-    {
-        QStringList charsToBeRemoved;
-        charsToBeRemoved << "\\" << "/" << ":" << "*" << "?" << "<" << ">" << "|" << "'" << "\"" << "&amp;quot;" << "~" << "^";
-        title = title.simplified();
-
-        if (title[0] == QChar('.'))
-        {
-            title = title.remove(0, 1);
-        }
-        if (title.size() > 0)
-        {
-            for (int i = 0; i < charsToBeRemoved.size(); ++i)
-            {
-                title = title.replace(charsToBeRemoved.at(i), "");
+    for (int i = 0; i < formats.size(); i++) {
+        QJsonObject format = formats.at(i).toObject();
+        if (acceptedExts.contains(format.value("ext").toString())) {
+            if (format.value("vcodec").toString() == "none") {
+                audioFormats << format;
+            } else {
+                videoFormats << format;
             }
         }
-        else
-        {
-            return "download-empty-title";
+    }
+
+    // Sort audio formats by bitrate
+    std::sort(audioFormats.begin(), audioFormats.end(), [](QJsonObject a, QJsonObject b) {
+        double tbrA = a.value("tbr").toDouble();
+        double tbrB = b.value("tbr").toDouble();
+
+        return tbrA > tbrB;
+    });
+
+    // Sort video formats by format and resolution
+    std::sort(videoFormats.begin(), videoFormats.end(), [](QJsonObject a, QJsonObject b) {
+        int heightA = a.value("height").toInt();
+        int heightB = b.value("height").toInt();
+        if (heightA != heightB) return heightA > heightB;
+
+        int fpsA = a.value("fps").toInt();
+        int fpsB = b.value("fps").toInt();
+        if (fpsA != fpsB) return fpsA > fpsB;
+
+        QString extA = a.value("ext").toString();
+        QString extB = b.value("ext").toString();
+        if (extA != extB) return extA > extB;
+
+        // This makes sure AVC1 comes before AV01 and AV01 is removed as a duplicate
+        QString vcodecA = a.value("vcodec").toString();
+        QString vcodecB = b.value("vcodec").toString();
+        if (vcodecA != vcodecB) return vcodecA > vcodecB;
+
+        QString acodecA = a.value("acodec").toString();
+        QString acodecB = b.value("acodec").toString();
+        if (acodecA != acodecB) {
+            if (acodecA == "none") return true;
+            if (acodecB == "none") return false;
+        }
+        return false;
+    });
+
+    // Remove duplicates
+    videoFormats.erase(
+        std::unique(videoFormats.begin(), videoFormats.end(), [](QJsonObject a, QJsonObject b) {
+            int heightA = a.value("height").toInt();
+            int heightB = b.value("height").toInt();
+            if (heightA != heightB) return false;
+
+            int fpsA = a.value("fps").toInt();
+            int fpsB = b.value("fps").toInt();
+            return fpsA == fpsB;
+        }),
+        videoFormats.end()
+    );
+
+    for (int i = 0; i < videoFormats.size(); i ++) {
+        QJsonObject videoFormat = videoFormats.at(i);
+        int height = videoFormat.value("height").toInt();
+        QRegularExpression heightExp("^(\\d+)p");
+        QRegularExpressionMatch match = heightExp.match(videoFormat.value("format_note").toString());
+        if (match.hasMatch()) height = match.captured(1).toInt();
+        int fps = videoFormat.value("fps").toInt();
+
+        QString name = QString::number(height) + "p";
+        if (name == "0p") name = tr("unknown");
+        else if (fps >= 59) name.append("60");
+
+        if (height >= 4000) {
+            name.append(" (8K)");
+        } else if (height >= 2000) {
+            name.append(" (4K)");
+        } else if (height >= 700) {
+            name.append(" (HD)");
+        }
+
+        if (videoFormat.value("ext").toString() == "webm") {
+            name.append(" WebM");
+        }
+
+        videoQuality quality(name, videoFormat.value("format_id").toString());
+        quality.resolution = height;
+        quality.videoFileSize = videoFormat.value("filesize").toInt();
+        quality.audioFileSize = 0;
+        quality.containerName = videoFormat.value("ext").toString();
+
+        QList<QJsonObject> compatibleAudioFormats(audioFormats);
+        QStringList compatibleAudioExts = {"aac", "m4a"};
+        if (videoFormat.value("ext") == "webm") {
+             compatibleAudioExts.clear();
+             compatibleAudioExts << "webm" << "ogg";
+        }
+        compatibleAudioFormats.erase(std::remove_if(compatibleAudioFormats.begin(), compatibleAudioFormats.end(), [videoFormat, compatibleAudioExts](QJsonObject audioFormat) {
+            QString ext = audioFormat.value("ext").toString();
+
+            return !compatibleAudioExts.contains(ext);
+        }), compatibleAudioFormats.end());
+
+        if (videoFormat.value("acodec") == "none" && audioFormats.size() > 0) {
+            int audioIndex = (compatibleAudioFormats.size() -1) * i / videoFormats.size();
+            quality.audioFormat = compatibleAudioFormats.at(audioIndex).value("format_id").toString();
+            quality.audioFileSize = compatibleAudioFormats.at(audioIndex).value("filesize").toInt();
+        }
+
+        qualities << quality;
+    }
+
+    state = state::fetched;
+}
+
+void video::handleDownloadInfo(QString line) {
+    qDebug() << line;
+    QRegularExpression re;
+    QRegularExpressionMatch match;
+
+    re.setPattern("^\\[download\\] Destination: (.+)");
+    match = re.match(line);
+    if (!match.captured(1).isNull()) {
+        QString filename = match.captured(1);
+        if (!downloadFilenames.contains(filename)) {
+            downloadFilenames << match.captured(1);
+            downloadSizeEstimates << 0;
+        }
+        return;
+    }
+
+    re.setPattern("^\\[download\\] (.+?) has already been downloaded( and merged)?");
+    match = re.match(line);
+    if (!match.captured(1).isNull()) {
+        finalDownloadFilename = match.captured(1);
+        return;
+    }
+    re.setPattern("^\\[ffmpeg|Merger\\] Merging formats into \"([^\"]+)\"");
+    match = re.match(line);
+    if (!match.captured(1).isNull()) {
+        finalDownloadFilename = match.captured(1);
+        return;
+    }
+
+    re.setPattern("^\\[download\\]\\s+(\\d+\\.\\d)%\\s+of\\s+~?(\\d+\\.\\d+)(T|G|M|K)iB");
+    match = re.match(line);
+    if (match.hasMatch() && !downloadFilenames.isEmpty()) {
+        qint64 downloadProgress = 0;
+        for (int i = 0; i < downloadFilenames.size(); i++) {
+            downloadProgress += QFileInfo(downloadFilenames.at(i)).size();
+            downloadProgress += QFileInfo(downloadFilenames.at(i) + ".part").size();
+        }
+
+        if (downloadSize > 0 && downloadProgress > 0) {
+            cachedDownloadSize = downloadSize;
+            cachedDownloadProgress = downloadProgress;
+            emit downloadProgressChanged(downloadSize, downloadProgress);
+        } else if (downloadProgress > 0) {
+            QStringList prefixes {"K", "M", "G", "T"};
+            qint64 downloadSizeEstimate = match.captured(2).toFloat() * pow(1024, 1 + prefixes.indexOf(match.captured(3)));
+            downloadSizeEstimates.replace(downloadSizeEstimates.size() - 1, downloadSizeEstimate);
+
+            qint64 totalDownloadSizeEstimate = 0;
+            for (int i = 0; i < downloadSizeEstimates.size(); i++) {
+                totalDownloadSizeEstimate += downloadSizeEstimates.at(i);
+            }
+
+            if (totalDownloadSizeEstimate > 0) {
+                cachedDownloadSize = totalDownloadSizeEstimate;
+                cachedDownloadProgress = downloadProgress;
+                emit downloadProgressChanged(totalDownloadSizeEstimate, downloadProgress);
+            }
         }
     }
-    else
-    {
-        return "download-empty-title";
+
+    re.setPattern("ERROR:\\s+(.*)");
+    match = re.match(line);
+    if (match.hasMatch()) {
+        qDebug() << "ERROR!" << match.captured(1);
+        state = state::error;
+        emit stateChanged();
+        youtubeDl->kill();
     }
-    qDebug() << title;
+}
+
+bool video::setQuality(int index) {
+    if (index >= qualities.size()) return false;
+
+    selectedQuality = index;
+    return true;
+}
+
+
+void video::setTargetFilename(QString filename) {
+    this->targetFilename = filename;
+}
+
+QString video::getSafeFilename() {
+    return title.replace(QRegularExpression("#|%|&|\\{|\\}|\\\\|<|>|\\*|\\?|/|\\$|!|'|\"|:|@|\\+|`|\\||=|"), "");
+}
+
+void video::setConverter(converter* targetConverter, int targetConverterMode) {
+    this->targetConverter = targetConverter->createNewInstance();
+    this->targetConverterMode = targetConverterMode;
+    this->audioOnly = targetConverter->isAudioOnly(targetConverterMode);
+
+    connect(this->targetConverter, &converter::conversionFinished, this, &video::handleConversionFinished);
+    connect(this->targetConverter, &converter::error, this, &video::handleConversionError);
+}
+
+QString video::getTitle() {
     return title;
 }
 
-void video::conversionFinished()
-{
-    this->_progressBar->setMaximum(1);
-    this->_progressBar->setValue(1);
-    this->_progressBar->setFormat(tr("Finished"));
-    this->_finished = true;
-    if (!this->_converter->target.isEmpty())
-    {
-        this->_targetPath = this->_converter->target;
+QString video::getArtist() {
+    return artist;
+}
+
+void video::setMetaTitle(QString title) {
+    metaTitle = title;
+}
+
+void video::setMetaArtist(QString artist) {
+    metaArtist = artist;
+}
+
+QString video::getThumbnail() {
+    if (portal == "youtube") {
+        return "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
     }
-    setToolTip("<strong>" + tr("Finished!") + "</strong>");
-
-    handler->clearDownloads();
-	if (this->downloadFile)
-	{
-		this->downloadFile->deleteLater();
-
-	}
-    emit conversionFinished(this);
-
+    return "";
 }
 
-QString video::getSaveFileName()
-{
-    return _targetPath;
+qint64 video::getDuration() {
+    return duration;
 }
 
-QString video::getTargetPath()
-{
-    return _targetPath;
+QString video::getUrl() {
+    return url;
 }
 
-QTreeWidgetItem* video::treeItem()
-{
-    return this->_treeItem;
+QList<videoQuality> video::getQualities() {
+    return qualities;
 }
 
+QString video::getSelectedQualityName() {
+    if (selectedQuality == -1) return "";
 
-bool video::isDownloadPaused()
-{
-    return this->_downloadPaused;
+    return qualities.at(selectedQuality).name;
 }
 
-void video::togglePause()
-{
-    if (this->_downloadPaused)
-    {
-        this->handler->continueAllDownloads();
-    }
-    else
-    {
-        this->handler->pauseAllDownloads();
-    }
-
-    this->_downloadPaused = !this->_downloadPaused;
+QString video::getPortalName() {
+    if (portal == "youtube") return "YouTube";
+    return portal;
 }
 
-QPair<qint64, qint64> video::downloadProgress()
-{
-	return cachedProgress;
+qint64 video::getDownloadSize() {
+    if (cachedDownloadSize < cachedDownloadProgress) return cachedDownloadProgress;
+    return cachedDownloadSize;
 }
 
-void video::setMetaTitle(QString title)
-{
-    if (title.size() > 0)
-    {
-        QStringList charsToBeRemoved;
-        charsToBeRemoved << "\\" << "/" << ":" << "*" << "?" << "<" << ">" << "|" << "'" << "\"" << "&amp;quot;";
-        title = title.simplified();
+qint64 video::getDownloadProgress() {
+    return cachedDownloadProgress;
+}
 
-        if (title[0] == QChar('.'))
-        {
-            title = title.remove(0, 1);
-        }
-        if (title.size() > 0)
-        {
-            for (int i = 0; i < charsToBeRemoved.size(); ++i)
-            {
-                title = title.replace(charsToBeRemoved.at(i), "");
+QString video::getTargetFormatName() {
+    if (targetConverter == nullptr) return "";
+    return targetConverter->getModes().at(targetConverterMode);
+}
+
+QList<video*> video::getPlaylistVideos() {
+    return playlistVideos;
+}
+
+void video::handleProcessFinished(int /*exitCode*/, QProcess::ExitStatus exitStatus) {
+    switch (state) {
+    case state::fetching:
+        if (exitStatus == QProcess::ExitStatus::NormalExit) {
+            handleInfoJson(youtubeDl->readAllStandardOutput());
+            youtubeDl->close();
+
+            if (qualities.length() > 0) {
+                qDebug() << "Discovered video: " << title;
+                state = state::fetched;
+            } else {
+                state = state::error;
             }
+        } else {
+            state = state::error;
         }
-        _metaTitle = title;
-    }
-}
+        emit stateChanged();
+        break;
+    case state::downloading:
+        if (exitStatus == QProcess::ExitStatus::NormalExit) {
 
-void video::setMetaArtist(QString artist)
-{
-    if (artist.size() > 0)
-    {
-        QStringList charsToBeRemoved;
-        charsToBeRemoved << "\\" << "!" << "\"";
-        artist = artist.simplified();
-
-        if (artist[0] == QChar('.'))
-        {
-            artist = artist.remove(0, 1);
-        }
-        if (artist.size() > 0)
-        {
-            for (int i = 0; i < charsToBeRemoved.size(); ++i)
-            {
-                artist = artist.replace(charsToBeRemoved.at(i), "");
+            if (finalDownloadFilename.isEmpty() && !downloadFilenames.empty()) finalDownloadFilename = downloadFilenames.last();
+            if (finalDownloadFilename.isEmpty()) {
+                state = state::error;
+                emit stateChanged();
+                return;
             }
+
+            state = state::converting;
+            QFile* file = new QFile();
+            file->setFileName(finalDownloadFilename);
+            targetConverter->startConversion(file, targetFilename, qualities.at(selectedQuality).containerName, metaTitle, metaArtist, targetConverterMode);
+        } else {
+            state = state::error;
         }
-        _metaArtist = artist;
+        emit stateChanged();
+        break;
+    case state::pausing:
+        state = state::paused;
+        emit stateChanged();
+        return;
+    case state::canceling:
+        removeTempFiles();
+        state = state::canceled;
+        emit stateChanged();
+        return;
+    default:
+        break;
     }
 }
 
-QString video::metaTitle()
-{
-    return _metaTitle;
-}
-
-QString video::metaArtist()
-{
-    return _metaArtist;
-}
-
-void video::slotAnalysingFinished()
-{
-
-    qDebug() << "Discovered: " << _title;
-    for (int i = 0; i > _supportedQualities.size(); i++)
-    {
-        qDebug() << _supportedQualities.at(i).quality << _supportedQualities.at(i).containerName << _supportedQualities.at(i).videoUrl;
-    }
-	handler->clearDownloads();
-
-    //If the video download has been restarted, commence download right away
-    if (this->_isRestarted)
-    {
-        this->download();
+void video::handleProcessReadyRead() {
+    switch (state) {
+    case state::fetching:
+       // data is read all at once when process finishes
+       break;
+     case state::downloading:
+        while (youtubeDl->canReadLine()) {
+            handleDownloadInfo(QString::fromLocal8Bit(youtubeDl->readLine()));
+        }
+        break;
+     default:
+        break;
     }
 }
 
-
-void video::networkError(QString message)
-{
-    emit error(message, this);
+void video::handleConversionFinished() {
+    removeTempFiles();
+    finalFilename = targetConverter->target;
+    state = state::finished;
+    emit stateChanged();
 }
 
-void video::cancel()
-{
-    handler->cancelAllDownloads();
+void video::handleConversionError(QString /*error*/) {
+    state = state::error;
+    emit stateChanged();
+}
 
-    if (this->_progressBar)
-    {
-        this->_progressBar->setMaximum(1);
-        this->_progressBar->setValue(0);
-        this->_progressBar->setFormat(tr("Cancelled"));
+void video::removeTempFiles() {
+    for (int i = 0; i < downloadFilenames.size(); i++) {
+        QFile::remove(downloadFilenames.at(i));
+        QFile::remove(downloadFilenames.at(i) + ".part");
     }
-    setToolTip("");
-}
-
-void video::restart()
-{
-    this->_isRestarted = true;
-    this->_finished = false;
-    this->_downloadPaused = false;
-    this->_step = 0;
-    this->cachedProgress.first = 0;
-    this->cachedProgress.second = 0;
-
-    handler->disconnect(this);
-    this->handler->cancelAllDownloads();
-
-    connect(handler, SIGNAL(allDownloadsFinished()), this, SLOT(handleDownloads()));
-    connect(handler, SIGNAL(error(QString)), this, SLOT(networkError(QString)));
-
-    this->disconnect(SIGNAL(analysingFinished()));
-    this->analyse();
-}
-
-bool video::isFinished()
-{
-    return _finished;
-}
-
-QString video::originalUrl()
-{
-    return _originalUrl;
+    QFile::remove(finalDownloadFilename);
 }

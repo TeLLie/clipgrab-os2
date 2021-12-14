@@ -4,7 +4,6 @@
         <file>icon.png</file>
         <file>logo.png</file>
         <file>paypal-logo.png</file>
-        <file>equifax_secure_ca.crt</file>
     </qresource>
     <qresource prefix="/lng">
         <file>clipgrab_fr.qm</file>
@@ -39,8 +38,16 @@
         <file>clipgrab_mk.qm</file>
         <file>clipgrab_bg.qm</file>
         <file>clipgrab_eu.qm</file>
+        <file>clipgrab_bn.qm</file>
     </qresource>
     <qresource prefix="/crt">
-        <file>equifax_secure_ca.crt</file>
+        <file>mozilla-root-cas.txt</file>
     </qresource>
+    <qresource prefix="/search">
+        <file>loading-progress.html</file>
+        <file>loading-styles.css</file>
+        <file>loading-failed.html</file>
+        <file>search-styles.css</file>
+    </qresource>
+    <qresource prefix="/"/>
 </RCC>

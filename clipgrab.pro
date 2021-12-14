@@ -6,49 +6,47 @@ TARGET = clipgrab
 DEPENDPATH += . \
     release
 INCLUDEPATH += .
+QT += core \
+    widgets
+QT += gui
 QT += network
-QT += webkit
 QT += xml
+QT += webenginewidgets
 
 # Input
-HEADERS += clipgrab.h \
-    converter.h \
+HEADERS += converter.h \
     converter_copy.h \
     converter_ffmpeg.h \
+    download_list_model.h \
+    helper_downloader.h \
     mainwindow.h \
     video.h \
-    video_youtube.h \
-    video_dailymotion.h \
-    video_vimeo.h \
-    video_myspass.h \
-    video_heuristic.h \
-    video_facebook.h \
-    http_handler.h \
     notifications.h \
-    message_dialog.h
-FORMS += mainwindow.ui \
-    metadata-dialog.ui \
+    message_dialog.h \
+    clipgrab.h \
+    web_engine_view.h \
+    youtube_dl.h
+FORMS += metadata-dialog.ui \
+    helper_downloader.ui \
+    mainwindow.ui \
     update_message.ui \
-    message_dialog.ui \
-    login_dialog.ui
-SOURCES += clipgrab.cpp \
-    converter.cpp \
+    message_dialog.ui
+SOURCES += converter.cpp \
     converter_copy.cpp \
     converter_ffmpeg.cpp \
+    download_list_model.cpp \
+    helper_downloader.cpp \
     main.cpp \
     mainwindow.cpp \
     video.cpp \
-    video_youtube.cpp \
-    video_dailymotion.cpp \
-    video_vimeo.cpp \
-    video_myspass.cpp \
-    video_heuristic.cpp \
-    video_facebook.cpp \
-    http_handler.cpp \
     notifications.cpp \
-    message_dialog.cpp
+    message_dialog.cpp \
+    clipgrab.cpp \
+    web_engine_view.cpp \
+    youtube_dl.cpp
 RESOURCES += resources.qrc
 TRANSLATIONS += clipgrab_bg.ts \
+                clipgrab_bn.ts \
                 clipgrab_ca.ts \
                 clipgrab_cs.ts \
                 clipgrab_de.ts \
@@ -68,11 +66,13 @@ TRANSLATIONS += clipgrab_bg.ts \
                 clipgrab_lt.ts \
                 clipgrab_nl.ts \
                 clipgrab_no.ts \
+                clipgrab_pa.ts \
                 clipgrab_pl.ts \
                 clipgrab_pt.ts \
                 clipgrab_ro.ts \
                 clipgrab_ru.ts \
                 clipgrab_si.ts \
+                clipgrab_sr.ts \
                 clipgrab_sv.ts \
                 clipgrab_sw.ts \
                 clipgrab_tr.ts \
@@ -86,13 +86,7 @@ macx {
     ICON = clipgrab.icns
     RC_FILE = clipgrab.icns
     QMAKE_INFO_PLIST = ClipGrab.plist
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-    QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.7.sdk
-    OBJECTIVE_HEADERS += notifications_mac.h
-    OBJECTIVE_SOURCES += notifications_mac.mm
-    OBJECTIVE_HEADERS += savedialog_mac.h
-    OBJECTIVE_SOURCES += savedialog_mac.mm
     LIBS += -framework AppKit -framework Foundation
 }
-VERSION = 3.7.2
+VERSION = 3.9.7
 DEFINES += CLIPGRAB_VERSION=$$VERSION

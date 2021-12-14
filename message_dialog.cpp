@@ -6,6 +6,12 @@ messageDialog::messageDialog(QWidget *parent) :
     ui(new Ui::messageDialog)
 {
     ui->setupUi(this);
+    page = new MessageDialogWebEnginePage(new QWebEngineProfile);
+    connect(page, SIGNAL(linkClicked(QUrl)), this, SLOT(handleLink(QUrl)));
+    ui->webEngineView->setPage(page);
+    ui->webEngineView->setAcceptDrops(false);
+    ui->webEngineView->setContextMenuPolicy(Qt::NoContextMenu);
+    linkPolicy = "open";
 }
 
 messageDialog::~messageDialog()
@@ -15,23 +21,22 @@ messageDialog::~messageDialog()
 
 void messageDialog::setUrl(QUrl url)
 {
-    ui->webView->setUrl(url);
+    ui->webEngineView->page()->setUrl(url);
 }
 
-void messageDialog::setLinkDelegationPolicy(QWebPage::LinkDelegationPolicy policy)
-{
-    ui->webView->page()->setLinkDelegationPolicy(policy);
-    this->linkDelegationPolicy = policy;
-    connect(ui->webView, SIGNAL(linkClicked(QUrl)), this, SLOT(handleLink(QUrl)));
+void messageDialog::setLinkPolicy(QString policy) {
+    linkPolicy = policy;
 }
+
 
 void messageDialog::handleLink(QUrl url)
 {
-    if (this->linkDelegationPolicy == QWebPage::DelegateExternalLinks && url.host() == ui->webView->url().host())
+    if ((linkPolicy == "open-external" && url.host() == page->url().host()) || linkPolicy == "follow")
     {
-        this->ui->webView->load(url);
-        return;
+        page->setUrl(url);
     }
-
-    QDesktopServices::openUrl(url);
+    else
+    {
+        QDesktopServices::openUrl(url);
+    }
 }

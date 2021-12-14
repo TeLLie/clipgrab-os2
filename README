@@ -5,12 +5,12 @@ But compiling ClipGrab is really easy!
 
 ##Prerequisites
 
-You need to install the Qt4 developer libraries in order to compile the program.
+You need to install the Qt5 developer libraries in order to compile the program.
 
 On Ubuntu and Debian-based system, you can install the necessary libraries like this:
-sudo apt install libqt4-dev libqt4-bin libqtwebkit-dev
+sudo apt install qtbase5-dev qtwebengine5-dev
 
-Other Linux distributions might have slightly different package names. Packages for Windows and macOS can be downloaded here: https://download.qt.io/archive/qt/4.8/4.8.7/
+Other Linux distributions might have slightly different package names. Packages for Windows and macOS can be downloaded here: https://download.qt.io/archive/qt/5.12/
 
 In addition, ffmpeg (no developer libs necessary) needs to be installed.
 
