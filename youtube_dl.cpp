@@ -51,6 +51,8 @@ QProcess* YoutubeDl::instance(QString path, QStringList arguments) {
 
     #if defined Q_OS_WIN
         process->setProgram(execPath + "/python/python.exe");
+    #elif __OS2__
+        process->setProgram(QStandardPaths::findExecutable("python.exe"));
     #else
         process->setProgram(QStandardPaths::findExecutable("python3"));
     #endif
