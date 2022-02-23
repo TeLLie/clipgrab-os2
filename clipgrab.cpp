@@ -276,6 +276,9 @@ void ClipGrab::getUpdateInfo()
     #if defined Q_OS_MAC
          sys = "mac";
     #endif
+    #if defined Q_OS_OS2
+         sys = "os2";
+    #endif
 
     QString firstStarted = settings.value("firstStarted", "").toString();
 
