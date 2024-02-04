@@ -6,6 +6,7 @@ YoutubeDl::YoutubeDl()
 }
 
 QString YoutubeDl::path = QString();
+QString YoutubeDl::pythonCaFile = QString();
 
 QString YoutubeDl::find(bool force) {
     if (!force && !path.isEmpty()) return path;
@@ -46,15 +47,43 @@ QProcess* YoutubeDl::instance(QString path, QStringList arguments) {
 
     QString execPath = QCoreApplication::applicationDirPath();
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("PATH", execPath + ":" + env.value("PATH"));
-    process->setEnvironment(env.toStringList());
 
     #if defined Q_OS_WIN
+        env.insert("PATH", QDir::toNativeSeparators(execPath) + ";" + env.value("PATH"));
         process->setProgram(execPath + "/python/python.exe");
+    #elif defined Q_OS_MAC
+        QDir pythonDir(execPath + "/../Frameworks/Python.framework/Versions/Current/bin");
+        QString pythonPath = pythonDir.canonicalPath() + "/python3";
+        if (QFile::exists(pythonPath)) {
+            if (pythonCaFile.isEmpty()) {
+                QProcess* caFileProcess = new QProcess();
+                caFileProcess->setProgram(pythonPath);
+                caFileProcess->setProcessEnvironment(env);
+                caFileProcess->setArguments(QStringList() << "-m" << "pip._vendor.certifi");
+                caFileProcess->start();
+                caFileProcess->waitForFinished(10000);
+                pythonCaFile = caFileProcess->readLine().trimmed();
+                QString error = caFileProcess->readAllStandardError();
+                if (!error.isEmpty()) {
+                    qDebug() << "Error finding Python certificates" << error;
+                }
+                qDebug() << "Using SSL_CERT_FILE" << pythonCaFile;
+            }
+        } else {
+            pythonPath = QStandardPaths::findExecutable("python3");
+        }
+
+        if (!pythonCaFile.isEmpty()) {
+            env.insert("SSL_CERT_FILE", pythonCaFile);
+        }
+
+        env.insert("PATH", execPath + ":" + env.value("PATH"));
+        process->setProgram(pythonPath);
     #else
+        env.insert("PATH", execPath + ":" + env.value("PATH"));
         process->setProgram(QStandardPaths::findExecutable("python3"));
     #endif
-
+    
     QSettings settings;
     QStringList proxyArguments;
     if (settings.value("UseProxy", false).toBool()) {
@@ -82,6 +111,9 @@ QProcess* YoutubeDl::instance(QString path, QStringList arguments) {
     }
 
     process->setArguments(QStringList() << path << arguments << proxyArguments << networkArguments);
+    process->setWorkingDirectory(QDir::tempPath());
+    process->setProcessEnvironment(env);
+    
     return process;
 }
 

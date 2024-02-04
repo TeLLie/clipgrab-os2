@@ -17,6 +17,7 @@ public:
     static QString findPython();
 
     static QString path;
+    static QString pythonCaFile;
 };
 
 #endif // YOUTUBEDL_H

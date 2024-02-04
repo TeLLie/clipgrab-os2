@@ -109,7 +109,7 @@ protected:
     QString artist;
     QString metaTitle;
     QString metaArtist;
-    int duration;
+    qint64 duration;
     int selectedQuality;
     QList<videoQuality> qualities;
 
