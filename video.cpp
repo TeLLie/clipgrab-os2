@@ -33,6 +33,7 @@ video::video() {
     cachedDownloadSize = 0;
     cachedDownloadProgress = 0;
     audioOnly = false;
+    duration = 0;
 }
 
 void video::startYoutubeDl(QStringList arguments) {
@@ -171,6 +172,8 @@ void video::handleInfoJson(QByteArray data) {
             url = "https://www.youtube.com/watch?v=" + url;
         }
 
+        duration = json.value("duration").toInt(0);
+
         state = state::unfetched;
         return;
     }
@@ -195,8 +198,10 @@ void video::handleInfoJson(QByteArray data) {
     QList<QJsonObject> videoFormats;
     QList<QJsonObject> audioFormats;
     QStringList acceptedExts = {"mp4", "m4a"};
+    QStringList vcodecPreferences = {"avc1", "av01"};
     if (QSettings().value("UseWebM", false).toBool()) {
         acceptedExts << "webm" << "opus";
+        vcodecPreferences.empty();
     }
     for (int i = 0; i < formats.size(); i++) {
         QJsonObject format = formats.at(i).toObject();
@@ -218,7 +223,7 @@ void video::handleInfoJson(QByteArray data) {
     });
 
     // Sort video formats by format and resolution
-    std::sort(videoFormats.begin(), videoFormats.end(), [](QJsonObject a, QJsonObject b) {
+    std::sort(videoFormats.begin(), videoFormats.end(), [vcodecPreferences](QJsonObject a, QJsonObject b) {
         int heightA = a.value("height").toInt();
         int heightB = b.value("height").toInt();
         if (heightA != heightB) return heightA > heightB;
@@ -231,10 +236,22 @@ void video::handleInfoJson(QByteArray data) {
         QString extB = b.value("ext").toString();
         if (extA != extB) return extA > extB;
 
-        // This makes sure AVC1 comes before AV01 and AV01 is removed as a duplicate
         QString vcodecA = a.value("vcodec").toString();
         QString vcodecB = b.value("vcodec").toString();
-        if (vcodecA != vcodecB) return vcodecA > vcodecB;
+
+        bool vcodecAPreferencePos = vcodecPreferences.length();
+        bool vcodecBPreferencePos = vcodecPreferences.length();
+
+        for (int i = 0; i < vcodecPreferences.length(); i++) {
+            if (vcodecA.startsWith(vcodecPreferences.at(i))) vcodecAPreferencePos = i;
+            if (vcodecB.startsWith(vcodecPreferences.at(i))) vcodecBPreferencePos = i;
+        }
+
+        // If there is a preferred codec, put it first
+        if (vcodecAPreferencePos != vcodecBPreferencePos) return vcodecAPreferencePos < vcodecBPreferencePos;
+
+        // Else use alphabetic ordering
+        if (vcodecA != vcodecB) return vcodecA < vcodecB;
 
         QString acodecA = a.value("acodec").toString();
         QString acodecB = b.value("acodec").toString();
@@ -293,7 +310,7 @@ void video::handleInfoJson(QByteArray data) {
         QStringList compatibleAudioExts = {"aac", "m4a"};
         if (videoFormat.value("ext") == "webm") {
              compatibleAudioExts.clear();
-             compatibleAudioExts << "webm" << "ogg";
+             compatibleAudioExts << "webm" << "ogg" << "opus";
         }
         compatibleAudioFormats.erase(std::remove_if(compatibleAudioFormats.begin(), compatibleAudioFormats.end(), [videoFormat, compatibleAudioExts](QJsonObject audioFormat) {
             QString ext = audioFormat.value("ext").toString();
@@ -342,7 +359,7 @@ void video::handleDownloadInfo(QString line) {
         return;
     }
 
-    re.setPattern("^\\[download\\]\\s+(\\d+\\.\\d)%\\s+of\\s+~?(\\d+\\.\\d+)(T|G|M|K)iB");
+    re.setPattern("^\\[download\\]\\s+(\\d+\\.\\d)%\\s+of\\s+~?\\s*(\\d+\\.\\d+)(T|G|M|K)iB");
     match = re.match(line);
     if (match.hasMatch() && !downloadFilenames.isEmpty()) {
         qint64 downloadProgress = 0;
@@ -351,13 +368,16 @@ void video::handleDownloadInfo(QString line) {
             downloadProgress += QFileInfo(downloadFilenames.at(i) + ".part").size();
         }
 
-        if (downloadSize > 0 && downloadProgress > 0) {
-            cachedDownloadSize = downloadSize;
+        QStringList prefixes {"K", "M", "G", "T"};
+        qint64 downloadSizeEstimate = match.captured(2).toFloat() * pow(1024, 1 + prefixes.indexOf(match.captured(3)));
+
+        qint64 previousDownloadSizeEstimate = downloadSizeEstimates.last();
+        bool downloadSizeChangedSignificantly = downloadSize == 0 || (downloadSizeEstimate > previousDownloadSizeEstimate * 1.1) || (previousDownloadSizeEstimate < downloadSize * 0.9);
+
+        if (downloadProgress > 0 && !downloadSizeChangedSignificantly) {
             cachedDownloadProgress = downloadProgress;
-            emit downloadProgressChanged(downloadSize, downloadProgress);
+            emit downloadProgressChanged(cachedDownloadSize, downloadProgress);
         } else if (downloadProgress > 0) {
-            QStringList prefixes {"K", "M", "G", "T"};
-            qint64 downloadSizeEstimate = match.captured(2).toFloat() * pow(1024, 1 + prefixes.indexOf(match.captured(3)));
             downloadSizeEstimates.replace(downloadSizeEstimates.size() - 1, downloadSizeEstimate);
 
             qint64 totalDownloadSizeEstimate = 0;
@@ -473,6 +493,7 @@ QList<video*> video::getPlaylistVideos() {
 }
 
 void video::handleProcessFinished(int /*exitCode*/, QProcess::ExitStatus exitStatus) {
+    qDebug() << youtubeDl->readAllStandardError();
     switch (state) {
     case state::fetching:
         if (exitStatus == QProcess::ExitStatus::NormalExit) {

@@ -88,5 +88,5 @@ macx {
     QMAKE_INFO_PLIST = ClipGrab.plist
     LIBS += -framework AppKit -framework Foundation
 }
-VERSION = 3.9.7
+VERSION = 3.9.10
 DEFINES += CLIPGRAB_VERSION=$$VERSION
