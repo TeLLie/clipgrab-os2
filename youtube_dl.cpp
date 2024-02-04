@@ -54,6 +54,31 @@ QProcess* YoutubeDl::instance(QString path, QStringList arguments) {
     #elif defined Q_OS_OS2
         QDir pythonDir(execPath + "/@unixroot/usr/bin");
         QString pythonPath = pythonDir.canonicalPath() + "/@unixroot/usr/bin/python.exe";
+        if (QFile::exists(pythonPath)) {
+            if (pythonCaFile.isEmpty()) {
+                QProcess* caFileProcess = new QProcess();
+                caFileProcess->setProgram(pythonPath);
+                caFileProcess->setProcessEnvironment(env);
+                caFileProcess->setArguments(QStringList() << "-m" << "pip._vendor.certifi");
+                caFileProcess->start();
+                caFileProcess->waitForFinished(10000);
+                pythonCaFile = caFileProcess->readLine().trimmed();
+                QString error = caFileProcess->readAllStandardError();
+                if (!error.isEmpty()) {
+                    qDebug() << "Error finding Python certificates" << error;
+                }
+                qDebug() << "Using SSL_CERT_FILE" << pythonCaFile;
+            }
+        } else {
+            pythonPath = QStandardPaths::findExecutable("python3");
+        }
+
+        if (!pythonCaFile.isEmpty()) {
+            env.insert("SSL_CERT_FILE", pythonCaFile);
+        }
+
+        env.insert("PATH", execPath + ":" + env.value("PATH"));
+        process->setProgram(pythonPath);
     #elif defined Q_OS_MAC
         QDir pythonDir(execPath + "/../Frameworks/Python.framework/Versions/Current/bin");
         QString pythonPath = pythonDir.canonicalPath() + "/python3";
