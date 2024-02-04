@@ -1,0 +1,10 @@
+History of OS/2-specific changes for Clipgrab
+===========================================
+
+This file contains only OS/2-specific changes. 
+Version 2024.01.15-os2 
+----------------------
+
+- Update source to build 2024-01-28
+- Add ico to exe file
+- Add os2 to find python 
